@@ -1,0 +1,556 @@
+{
+  "bank": "clf",
+  "packId": "pack-005",
+  "name": "追加問題: テクノロジーとサービス（コンピューティング・ストレージ・データベース・分析）",
+  "created": "2026-10-02",
+  "questions": [
+    {
+      "id": "clf-137",
+      "domain": "Cloud Technology and Services",
+      "q": "大量のデータをメモリ上で処理するインメモリデータベースをEC2で動かしたい。最も適したインスタンスファミリーはどれか。",
+      "options": [
+        {
+          "text": "メモリ最適化",
+          "summary": "CPUに対して大きなメモリを持つインスタンス群（R系、X系など）。",
+          "why": "「メモリ上で大量のデータを処理」に合う。",
+          "use": "SAP HANA のようなインメモリデータベースや、大規模なキャッシュサーバーに使う。"
+        },
+        {
+          "text": "コンピューティング最適化",
+          "summary": "高性能なCPUを重視したインスタンス群（C系）。",
+          "why": "CPUの計算量が多い処理向けで、大容量のメモリは強みではない。",
+          "use": "動画のエンコードや科学計算、高負荷のWebサーバーに使う。"
+        },
+        {
+          "text": "ストレージ最適化",
+          "summary": "ローカルストレージへの高速な読み書きを重視したインスタンス群（I系など）。",
+          "why": "ディスクの読み書きが多い処理向け。",
+          "use": "大量の読み書きが発生するNoSQLデータベースやデータウェアハウスに使う。"
+        },
+        {
+          "text": "高速コンピューティング",
+          "summary": "GPUなどのアクセラレーターを搭載したインスタンス群（P系、G系など）。",
+          "why": "並列計算やグラフィックス向けで、インメモリDBの第一候補ではない。",
+          "use": "機械学習モデルの学習や、3Dレンダリングに使う。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "汎用（バランス）、コンピューティング最適化（CPU）、メモリ最適化（メモリ）、ストレージ最適化（ディスクI/O）、高速コンピューティング（GPU）。ワークロードの「ボトルネック」で選ぶ。",
+      "docs": [
+        "https://aws.amazon.com/ec2/instance-types/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-138",
+      "domain": "Cloud Technology and Services",
+      "q": "EC2インスタンスを停止して再び起動しても、データが残っている必要がある。どのストレージを使うべきか。",
+      "options": [
+        {
+          "text": "Amazon EBS",
+          "summary": "EC2にネットワーク経由でアタッチするブロックストレージ。インスタンスとは独立して存在し、停止してもデータは残る。",
+          "why": "永続性が必要な用途に合う。スナップショットでバックアップも取れる。",
+          "use": "Webサーバーのシステム領域や、EC2上のデータベースのデータ領域に使う。"
+        },
+        {
+          "text": "インスタンスストア",
+          "summary": "ホストの物理サーバーに直接付いた一時的なストレージ。非常に高速。",
+          "why": "インスタンスを停止・終了するとデータが消えるため、要件に合わない。",
+          "use": "一時ファイル、キャッシュ、処理途中のデータなど、消えても困らないデータの置き場に使う。"
+        },
+        {
+          "text": "Amazon ElastiCache",
+          "summary": "インメモリのキャッシュサービス。",
+          "why": "EC2のディスクとして使うものではなく、永続保存も目的ではない。",
+          "use": "データベースの読み込み結果をキャッシュする。"
+        },
+        {
+          "text": "AWS Snow ファミリー",
+          "summary": "物理デバイスでのデータ移行。",
+          "why": "EC2のストレージではない。",
+          "use": "大容量データを物理的にAWSへ運ぶ。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "EBS＝永続（停止しても残る）、インスタンスストア＝一時（停止すると消える、その代わり速い）。",
+      "docs": [
+        "https://aws.amazon.com/ebs/",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-139",
+      "domain": "Cloud Technology and Services",
+      "q": "Windows のファイル共有（SMBプロトコル）と Active Directory 連携を使っている社内ファイルサーバーを、そのままの使い勝手でAWSに移したい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon FSx for Windows File Server",
+          "summary": "Windows Server 上に構築された、フルマネージドなWindowsファイルサーバー。SMBやActive Directoryに対応する。",
+          "why": "「Windows」「SMB」「Active Directory」の条件に合う。",
+          "use": "全社員が使う共有フォルダを、権限設定やドライブ割り当ての使い勝手を変えずにクラウドへ移す。"
+        },
+        {
+          "text": "Amazon EFS",
+          "summary": "Linux向けのマネージドなファイルシステム（NFS）。",
+          "why": "主にLinuxから使うもので、Windowsのファイル共有の置き換えには向かない。",
+          "use": "複数のLinuxのWebサーバーで、アップロードされたファイルを共有する。"
+        },
+        {
+          "text": "Amazon S3",
+          "summary": "オブジェクトストレージ。",
+          "why": "ファイルサーバーのようにドライブとしてマウントし、Windowsの権限で使うものではない。",
+          "use": "大量の画像やログを安く保存する。"
+        },
+        {
+          "text": "Amazon EBS",
+          "summary": "1台のEC2に付けるブロックストレージ。",
+          "why": "単体では複数の社員が使う共有ファイルサーバーにならない。",
+          "use": "EC2のディスクとして使う。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "Windowsのファイル共有＝FSx for Windows File Server、Linuxのファイル共有＝EFS。FSx には他にも Lustre（高性能計算向け）などの種類がある。",
+      "docs": [
+        "https://aws.amazon.com/fsx/windows/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-140",
+      "domain": "Cloud Technology and Services",
+      "q": "オンプレミスのアプリケーションをそのまま使い続けながら、保存先として裏側でクラウドのストレージを使い、社内には頻繁に使うデータだけをキャッシュしたい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "AWS Storage Gateway",
+          "summary": "オンプレミスからクラウドのストレージを、ファイル、ボリューム、テープとして使えるようにするハイブリッドストレージサービス。",
+          "why": "「オンプレミスのアプリはそのまま」「裏側はクラウド」「ローカルにキャッシュ」は Storage Gateway。",
+          "use": "テープ装置によるバックアップをやめ、既存のバックアップソフトから仮想テープとしてクラウドに保存する。"
+        },
+        {
+          "text": "AWS DataSync",
+          "summary": "オンプレミスとAWSの間で、データを転送・同期するサービス。",
+          "why": "データを移す・同期する道具で、アプリから日常的に使う保存先にはならない。",
+          "use": "ファイルサーバーのデータをまとめてS3に移行する。"
+        },
+        {
+          "text": "Amazon CloudFront",
+          "summary": "CDN。",
+          "why": "インターネット上の利用者への配信で、社内アプリの保存先ではない。",
+          "use": "Webサイトのコンテンツを世界中に配信する。"
+        },
+        {
+          "text": "Amazon EBS",
+          "summary": "EC2用のブロックストレージ。",
+          "why": "オンプレミスのサーバーから直接使うものではない。",
+          "use": "EC2のディスクとして使う。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "併用し続ける＝Storage Gateway、一度に移す・定期的に同期する＝DataSync。",
+      "docs": [
+        "https://aws.amazon.com/storagegateway/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-141",
+      "domain": "Cloud Technology and Services",
+      "q": "EC2、EBS、RDS、DynamoDB、EFS などのバックアップを、1つのポリシーで一元的にスケジュール・保持管理したい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "AWS Backup",
+          "summary": "複数のAWSサービスのバックアップを、ポリシーに基づいて一元的に自動化・管理するサービス。",
+          "why": "「複数サービスのバックアップを一元管理」は AWS Backup。",
+          "use": "「毎日取得、35日保存、月次は1年保存、別リージョンにもコピー」というルールを全システムに一括適用する。"
+        },
+        {
+          "text": "Amazon S3 Glacier Deep Archive",
+          "summary": "最も安価なアーカイブ用のストレージクラス。",
+          "why": "保存先の選択肢で、各サービスのバックアップを取得・管理する仕組みではない。",
+          "use": "長期保存が必要なデータを安く保管する。"
+        },
+        {
+          "text": "AWS CloudTrail",
+          "summary": "API呼び出しの記録。",
+          "why": "バックアップは取らない。",
+          "use": "誰がバックアップを削除したかを調べる。"
+        },
+        {
+          "text": "AWS Storage Gateway",
+          "summary": "オンプレミスからクラウドのストレージを使うためのサービス。",
+          "why": "AWS上の各サービスのバックアップを一元管理するものではない。",
+          "use": "オンプレミスのバックアップの保存先をクラウドにする。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "バックアップの取得・保持・コピーをまとめて管理したいなら AWS Backup。",
+      "docs": [
+        "https://aws.amazon.com/backup/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-142",
+      "domain": "Cloud Technology and Services",
+      "q": "MySQL や PostgreSQL と互換性があり、クラウド向けに設計された高性能・高可用性のマネージドなリレーショナルデータベースはどれか。",
+      "options": [
+        {
+          "text": "Amazon Aurora",
+          "summary": "MySQL・PostgreSQL互換の、AWSがクラウド向けに設計したリレーショナルデータベース。データは複数のAZに自動で複製される。",
+          "why": "「MySQL/PostgreSQL互換」「クラウド向けに設計」「高性能・高可用性」は Aurora。",
+          "use": "急成長中のWebサービスが、既存のMySQL向けのアプリをほぼそのまま使いながら、性能と可用性を高める。"
+        },
+        {
+          "text": "Amazon DynamoDB",
+          "summary": "NoSQLのデータベース。",
+          "why": "リレーショナルではなく、MySQLとの互換性もない。",
+          "use": "キーを使った高速な読み書きが中心のアプリに使う。"
+        },
+        {
+          "text": "Amazon Redshift",
+          "summary": "分析用のデータウェアハウス。",
+          "why": "日々の取引処理を担うデータベースではない。",
+          "use": "大量の売上データを集計・分析する。"
+        },
+        {
+          "text": "Amazon Neptune",
+          "summary": "グラフデータベース。",
+          "why": "MySQLやPostgreSQLとの互換性はない。",
+          "use": "人や物のつながりを分析する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "Aurora は RDS のエンジンの1つ。「MySQL/PostgreSQL互換で、より高性能・高可用性」と出たら Aurora。",
+      "docs": [
+        "https://aws.amazon.com/rds/aurora/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-143",
+      "domain": "Cloud Technology and Services",
+      "q": "オンプレミスの Oracle データベースを、移行中も業務を止める時間を最小限にしながら Amazon Aurora に移したい。データ移行の中心となるサービスはどれか。",
+      "options": [
+        {
+          "text": "AWS Database Migration Service (AWS DMS)",
+          "summary": "データベースを移行するサービス。移行元を動かしたまま、変更分を継続的に移行先に反映できる。",
+          "why": "「データベースの移行」「停止時間を最小限に」は DMS。異なるエンジン間の移行では、スキーマの変換にスキーマ変換ツールを併用する。",
+          "use": "ライセンス費用の高い商用データベースから、Aurora PostgreSQL への移行を、週末の短時間の切り替えだけで済ませる。"
+        },
+        {
+          "text": "AWS DataSync",
+          "summary": "ファイルデータの転送サービス。",
+          "why": "ファイルの移行が対象で、稼働中のデータベースを継続的に同期する用途ではない。",
+          "use": "ファイルサーバーのデータをS3に移す。"
+        },
+        {
+          "text": "AWS Snow ファミリー",
+          "summary": "物理デバイスによる大容量データの移行。",
+          "why": "稼働中のデータベースの変更を継続的に反映できないため、停止時間を最小にする要件に合わない。",
+          "use": "大量のアーカイブデータを一括で運ぶ。"
+        },
+        {
+          "text": "AWS Backup",
+          "summary": "AWS上のバックアップの一元管理。",
+          "why": "移行ツールではない。",
+          "use": "移行後のAuroraのバックアップを管理する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "データベースの移行＝DMS。ファイルの移行＝DataSync。サーバーの移行には AWS Application Migration Service などがある。",
+      "docs": [
+        "https://aws.amazon.com/dms/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-144",
+      "domain": "Cloud Technology and Services",
+      "q": "人気商品のページに同じ問い合わせが集中し、データベースの負荷が高くなっている。よく読まれるデータをメモリ上にキャッシュして、応答を速くしつつデータベースの負荷を下げたい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon ElastiCache",
+          "summary": "Redis（Valkey）や Memcached 互換の、マネージドなインメモリキャッシュ。",
+          "why": "「メモリ上のキャッシュ」「データベースの負荷軽減」は ElastiCache。",
+          "use": "セール中の商品情報やログイン中のセッション情報をキャッシュし、ミリ秒未満で返す。"
+        },
+        {
+          "text": "Amazon Redshift",
+          "summary": "分析用のデータウェアハウス。",
+          "why": "アプリの応答を速くするキャッシュではない。",
+          "use": "売上の傾向を分析する。"
+        },
+        {
+          "text": "Amazon S3 Glacier",
+          "summary": "アーカイブ用のストレージ。",
+          "why": "取り出しが遅く、キャッシュとは正反対の用途。",
+          "use": "めったに使わないデータを安く保存する。"
+        },
+        {
+          "text": "AWS Backup",
+          "summary": "バックアップの一元管理。",
+          "why": "応答速度の改善とは無関係。",
+          "use": "データベースのバックアップを自動化する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "データベースの前に置くキャッシュ＝ElastiCache。Webコンテンツのキャッシュ配信＝CloudFront。どこをキャッシュするかで使い分ける。",
+      "docs": [
+        "https://aws.amazon.com/elasticache/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-145",
+      "domain": "Cloud Technology and Services",
+      "q": "SNSの「友達の友達」のおすすめや、不正送金の口座のつながりの検出など、データ同士の関係性をたどる問い合わせを高速に行いたい。最も適したデータベースはどれか。",
+      "options": [
+        {
+          "text": "Amazon Neptune",
+          "summary": "マネージドなグラフデータベース。データを「点」と「つながり」で表し、関係をたどる処理が得意。",
+          "why": "「関係性をたどる」はグラフデータベースの用途。",
+          "use": "金融機関が、口座間の送金のつながりから不正な資金の流れのパターンを見つける。"
+        },
+        {
+          "text": "Amazon DynamoDB",
+          "summary": "キーバリュー型のNoSQL。",
+          "why": "キーでの高速な読み書きは得意だが、複雑な関係をたどる問い合わせには向かない。",
+          "use": "ユーザーごとのプロフィールを高速に読み書きする。"
+        },
+        {
+          "text": "Amazon Redshift",
+          "summary": "データウェアハウス。",
+          "why": "大量データの集計は得意だが、つながりを何段もたどる処理には向かない。",
+          "use": "月次の売上集計を行う。"
+        },
+        {
+          "text": "Amazon ElastiCache",
+          "summary": "インメモリキャッシュ。",
+          "why": "関係性のデータを管理するデータベースではない。",
+          "use": "よく読まれるデータをキャッシュする。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "目的別データベース：リレーショナル＝RDS/Aurora、キーバリュー＝DynamoDB、ドキュメント＝DocumentDB、グラフ＝Neptune、インメモリ＝ElastiCache、時系列＝Timestream。",
+      "docs": [
+        "https://aws.amazon.com/neptune/",
+        "https://aws.amazon.com/products/databases/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-146",
+      "domain": "Cloud Technology and Services",
+      "q": "Webサイトのクリック履歴や IoT 機器のセンサー値を、発生した瞬間から継続的に取り込み、リアルタイムに処理したい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon Kinesis Data Streams",
+          "summary": "大量のストリーミングデータをリアルタイムに取り込み、複数の処理に流すサービス。",
+          "why": "「リアルタイム」「ストリーミング」「継続的に取り込む」は Kinesis。",
+          "use": "ECサイトが閲覧中のユーザーの行動をリアルタイムで分析し、その場でおすすめ商品を変える。"
+        },
+        {
+          "text": "Amazon Athena",
+          "summary": "S3上のデータにSQLで問い合わせる。",
+          "why": "蓄積済みのデータを後から分析するもので、リアルタイムの取り込みではない。",
+          "use": "前日分のアクセスログを集計する。"
+        },
+        {
+          "text": "AWS Glue",
+          "summary": "データの抽出・変換・ロード (ETL) とデータカタログ。",
+          "why": "データの整形と準備が主な役割で、瞬間的なストリームの受け口としては Kinesis が第一候補。",
+          "use": "複数のシステムのデータを分析しやすい形にそろえる。"
+        },
+        {
+          "text": "Amazon S3 Glacier Deep Archive",
+          "summary": "アーカイブ用のストレージ。",
+          "why": "リアルタイムとは正反対。",
+          "use": "長期保存が必要なデータを安く保管する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "「リアルタイム」「ストリーミング」「クリックストリーム」「IoTのセンサーデータ」と出たら Kinesis。",
+      "docs": [
+        "https://aws.amazon.com/kinesis/data-streams/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-147",
+      "domain": "Cloud Technology and Services",
+      "q": "S3に溜まっているアクセスログを、サーバーやデータベースを用意せずに標準SQLで分析し、実行したクエリの分だけ支払いたい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon Athena",
+          "summary": "S3上のデータに直接、標準SQLで問い合わせできるサーバーレスのクエリサービス。",
+          "why": "「S3」「SQL」「サーバー不要」「クエリ単位の課金」は Athena。",
+          "use": "障害発生時に、S3に保存しているロードバランサーのログをSQLで絞り込み、エラーの発生時刻と送信元を特定する。"
+        },
+        {
+          "text": "Amazon Redshift",
+          "summary": "データウェアハウス。",
+          "why": "大規模な分析は得意だが、クラスターなどの準備が前提で、問題文の「何も用意せずに」に最も合うのは Athena。",
+          "use": "全社の売上データを継続的に集計・分析する基盤として使う。"
+        },
+        {
+          "text": "Amazon RDS",
+          "summary": "マネージドなリレーショナルデータベース。",
+          "why": "データをデータベースに入れる必要があり、S3のデータを直接問い合わせるものではない。",
+          "use": "業務アプリのデータを管理する。"
+        },
+        {
+          "text": "Amazon Kinesis Data Streams",
+          "summary": "ストリーミングデータの取り込み。",
+          "why": "蓄積済みのログをSQLで分析するものではない。",
+          "use": "リアルタイムのデータを取り込む。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "「S3のデータをそのままSQLで」「サーバーレス」は Athena。継続的な大規模分析基盤なら Redshift。",
+      "docs": [
+        "https://aws.amazon.com/athena/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-148",
+      "domain": "Cloud Technology and Services",
+      "q": "複数のシステムに散らばったデータを抽出し、分析に使える形に変換して保存する処理（ETL）を、サーバーレスで行いたい。データの所在と構造を管理するカタログも欲しい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "AWS Glue",
+          "summary": "サーバーレスのデータ統合サービス。ETL処理と、データの所在や構造を管理するデータカタログを提供する。",
+          "why": "「ETL」「サーバーレス」「データカタログ」は Glue。",
+          "use": "販売、在庫、会員の各システムのデータを毎晩集めて形式をそろえ、分析担当者が Athena で使えるようにする。"
+        },
+        {
+          "text": "Amazon QuickSight",
+          "summary": "BI（可視化・ダッシュボード）のサービス。",
+          "why": "整えたデータを見せる側で、データの変換処理ではない。",
+          "use": "経営会議用の売上ダッシュボードを作る。"
+        },
+        {
+          "text": "Amazon ElastiCache",
+          "summary": "インメモリキャッシュ。",
+          "why": "データの変換や統合とは関係ない。",
+          "use": "データベースの読み込みを速くする。"
+        },
+        {
+          "text": "AWS Direct Connect",
+          "summary": "オンプレミスとの専用線。",
+          "why": "回線で、データの変換は行わない。",
+          "use": "オンプレミスとAWSの間で大量のデータを安定して送る。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "分析の流れ：集める（Kinesis など）→ 整える（Glue）→ 溜める（S3/Redshift）→ 問い合わせる（Athena）→ 見せる（QuickSight）。",
+      "docs": [
+        "https://aws.amazon.com/glue/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-149",
+      "domain": "Cloud Technology and Services",
+      "q": "経営陣が売上や在庫の状況をブラウザで見られる、インタラクティブなダッシュボードを作りたい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon QuickSight",
+          "summary": "クラウドベースのBI（ビジネスインテリジェンス）サービス。データを可視化し、ダッシュボードを共有できる。",
+          "why": "「ダッシュボード」「可視化」「BI」は QuickSight。",
+          "use": "店舗別の売上と在庫の推移をダッシュボードにまとめ、経営会議で毎週確認する。"
+        },
+        {
+          "text": "Amazon CloudWatch",
+          "summary": "AWSリソースやアプリの監視サービス。ダッシュボード機能もある。",
+          "why": "システムの稼働状況を見るためのもので、売上などの業務データの分析用ではない。",
+          "use": "サーバーのCPU使用率やエラー数をダッシュボードで監視する。"
+        },
+        {
+          "text": "AWS Glue",
+          "summary": "ETLとデータカタログ。",
+          "why": "データの準備をする側で、可視化はしない。",
+          "use": "分析用にデータを整える。"
+        },
+        {
+          "text": "Amazon Kinesis Data Streams",
+          "summary": "ストリーミングデータの取り込み。",
+          "why": "可視化の機能はない。",
+          "use": "リアルタイムのデータを取り込む。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "業務データのダッシュボード＝QuickSight、システムの監視ダッシュボード＝CloudWatch。何のデータを見せるかで区別する。",
+      "docs": [
+        "https://aws.amazon.com/quicksight/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-150",
+      "domain": "Cloud Technology and Services",
+      "q": "データサイエンティストのチームが、自社のデータで独自の機械学習モデルを構築・学習・デプロイしたい。開発環境から運用までをまとめて提供するフルマネージドなサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon SageMaker AI",
+          "summary": "機械学習モデルの構築、学習、デプロイを一貫して行うためのフルマネージドなサービス（旧称 Amazon SageMaker）。",
+          "why": "「独自のモデルを構築・学習・デプロイ」は SageMaker AI。",
+          "use": "小売企業が、自社の販売履歴から店舗ごとの需要予測モデルを作り、発注の自動化に使う。"
+        },
+        {
+          "text": "Amazon Bedrock",
+          "summary": "主要な基盤モデル（大規模言語モデルなど）をAPIで使い、生成AIアプリを作るためのサービス。",
+          "why": "既存の基盤モデルを使う方が中心で、ゼロから独自モデルを学習させるならSageMaker AIが第一候補。",
+          "use": "社内文書を検索して答えるチャットボットを、基盤モデルを使って作る。"
+        },
+        {
+          "text": "Amazon Rekognition",
+          "summary": "学習済みの画像・動画分析サービス。",
+          "why": "モデルを自作せずに使うAIサービスで、独自モデルの開発環境ではない。",
+          "use": "写真から人物や物体を検出する。"
+        },
+        {
+          "text": "Amazon QuickSight",
+          "summary": "BIサービス。",
+          "why": "機械学習モデルの開発環境ではない。",
+          "use": "売上ダッシュボードを作る。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "AIサービスの3層：①学習済みのAIをすぐ使う（Rekognition、Comprehend など）②基盤モデルで生成AIを作る（Bedrock）③独自モデルを作る（SageMaker AI）。",
+      "docs": [
+        "https://aws.amazon.com/sagemaker-ai/"
+      ],
+      "added": "2026-10-02"
+    }
+  ]
+}

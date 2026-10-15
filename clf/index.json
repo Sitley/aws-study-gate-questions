@@ -1,0 +1,17 @@
+{
+  "name": "AWS Certified Cloud Practitioner (CLF-C02)",
+  "note": "Packs load in order. A later pack overrides an earlier question with the same id. Add new packs to the end of this list.",
+  "packs": [
+    "pack-001.json",
+    "pack-002.json",
+    "pack-003.json",
+    "pack-004.json",
+    "pack-005.json",
+    "pack-006.json",
+    "pack-007.json",
+    "pack-008.json",
+    "pack-009.json",
+    "pack-010.json",
+    "pack-011.json"
+  ]
+}

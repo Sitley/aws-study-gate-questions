@@ -1,0 +1,864 @@
+{
+  "bank": "clf",
+  "packId": "pack-010",
+  "name": "追加問題（第2弾）: テクノロジーとサービス",
+  "created": "2026-10-16",
+  "questions": [
+    {
+      "id": "clf-222",
+      "domain": "Cloud Technology and Services",
+      "q": "OS、ミドルウェア、社内の設定をすべて済ませたサーバーと同じ構成のEC2インスタンスを、必要なときに何台でも素早く起動したい。起動の元になるテンプレートとして使うものはどれか。",
+      "options": [
+        {
+          "text": "Amazon マシンイメージ (AMI)",
+          "summary": "OSやソフトウェア、設定を含んだ、EC2インスタンスを起動するためのイメージ。",
+          "why": "同じ構成のインスタンスを繰り返し起動する元になるのが AMI。",
+          "use": "社内標準の設定を済ませた AMI を作り、Auto Scaling が新しいサーバーを起動するときにそれを使う。"
+        },
+        {
+          "text": "EBS スナップショット",
+          "summary": "EBSボリュームのある時点のバックアップ。",
+          "why": "ディスクのバックアップで、それだけではインスタンスの起動テンプレートにはならない（AMIの中身として使われる）。",
+          "use": "データ用ボリュームを毎日バックアップする。"
+        },
+        {
+          "text": "セキュリティグループ",
+          "summary": "インスタンスへの通信の許可設定。",
+          "why": "OSやソフトウェアの構成は含まない。",
+          "use": "Webサーバーへの通信を制御する。"
+        },
+        {
+          "text": "IAMロール",
+          "summary": "インスタンスに与える権限。",
+          "why": "構成のテンプレートではない。",
+          "use": "インスタンスからS3を使えるようにする。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "AMI＝サーバーの型。Auto Scaling や災害対策（別リージョンでの起動）でも使われる。",
+      "docs": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-223",
+      "domain": "Cloud Technology and Services",
+      "q": "EC2で使っているEBSボリュームの、ある時点の状態を定期的にバックアップしたい。2回目以降は変更された部分だけを保存して、費用を抑えたい。最も適したものはどれか。",
+      "options": [
+        {
+          "text": "EBS スナップショット",
+          "summary": "EBSボリュームのある時点の状態を保存するバックアップ。2回目以降は前回からの変更分だけが保存される（増分）。",
+          "why": "「ある時点のバックアップ」「変更分だけ」は EBS スナップショット。",
+          "use": "データベースサーバーのボリュームを毎晩スナップショットで保存し、障害時はそこから新しいボリュームを作る。"
+        },
+        {
+          "text": "インスタンスストア",
+          "summary": "ホストに直接付いた一時的なストレージ。",
+          "why": "バックアップの仕組みではなく、停止するとデータが消える。",
+          "use": "一時ファイルの置き場に使う。"
+        },
+        {
+          "text": "Amazon ElastiCache",
+          "summary": "インメモリキャッシュ。",
+          "why": "バックアップではない。",
+          "use": "データベースの読み込みを速くする。"
+        },
+        {
+          "text": "AWS Direct Connect",
+          "summary": "専用線。",
+          "why": "バックアップではない。",
+          "use": "オンプレミスとAWSを接続する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "EBSのバックアップ＝スナップショット（増分で保存）。複数のサービスのバックアップをまとめて管理したいなら AWS Backup。",
+      "docs": [
+        "https://docs.aws.amazon.com/ebs/latest/userguide/ebs-snapshots.html"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-224",
+      "domain": "Cloud Technology and Services",
+      "q": "S3に保存しているログは、最初の30日はよく見るが、その後はほとんど見ない。7年経ったら削除してよい。この流れを手作業なしで自動化し、費用を抑えたい。最も適したものはどれか。",
+      "options": [
+        {
+          "text": "S3 ライフサイクルルール",
+          "summary": "日数などの条件に応じて、オブジェクトを安いストレージクラスへ自動で移したり、自動で削除したりする設定。",
+          "why": "「一定期間後に安いクラスへ」「期限が来たら削除」を自動化できる。",
+          "use": "30日後に Standard-IA、1年後に Glacier Deep Archive へ移し、7年後に自動で削除する。"
+        },
+        {
+          "text": "S3 バージョニング",
+          "summary": "過去の版を残す機能。",
+          "why": "保存の階層や削除の自動化はしない（むしろ版の分だけ保存量が増える）。",
+          "use": "誤った上書きから元に戻す。"
+        },
+        {
+          "text": "S3 Transfer Acceleration",
+          "summary": "アップロードを速くする機能。",
+          "why": "保存期間の管理とは無関係。",
+          "use": "海外から大きなファイルを速く送る。"
+        },
+        {
+          "text": "Amazon CloudFront",
+          "summary": "CDN。",
+          "why": "保存期間の管理とは無関係。",
+          "use": "コンテンツを世界中に配信する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "アクセス頻度の変化が「予測できる」ならライフサイクルルール。「予測できない」なら Intelligent-Tiering。",
+      "docs": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-225",
+      "domain": "Cloud Technology and Services",
+      "q": "HTML、CSS、画像だけでできた会社案内のWebサイトを、サーバーを管理せずに低コストで公開したい。最も適した方法はどれか。",
+      "options": [
+        {
+          "text": "S3 の静的Webサイトホスティングを使う（必要に応じて CloudFront と組み合わせる）",
+          "summary": "S3のバケットに置いたファイルを、Webサイトとして配信する機能。",
+          "why": "サーバーなしで、保存量と転送量の分だけの低コストで公開できる。CloudFront と組み合わせればHTTPS化と高速化もできる。",
+          "use": "キャンペーン用の特設サイトをS3に置き、CloudFront 経由で配信する。"
+        },
+        {
+          "text": "EC2を3台起動して負荷分散する",
+          "summary": "サーバーを用意して配信する方法。",
+          "why": "静的なサイトには過剰で、サーバーの管理と費用がかかる。",
+          "use": "サーバー側の処理が必要な動的なアプリを動かす。"
+        },
+        {
+          "text": "Amazon RDS にHTMLを保存する",
+          "summary": "データベースにファイルを入れる方法。",
+          "why": "Webサイトの配信には向かない。",
+          "use": "—"
+        },
+        {
+          "text": "Amazon Redshift で配信する",
+          "summary": "データウェアハウス。",
+          "why": "Webサイトの配信には使わない。",
+          "use": "—"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "静的サイト（サーバー側の処理がない）は S3 ＋ CloudFront が定番。動的な処理が必要なら Lambda や EC2 を組み合わせる。",
+      "docs": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-226",
+      "domain": "Cloud Technology and Services",
+      "q": "災害対策として、東京リージョンのS3バケットに保存されたオブジェクトを、大阪リージョンのバケットへ自動的にコピーし続けたい。最も適した機能はどれか。",
+      "options": [
+        {
+          "text": "S3 クロスリージョンレプリケーション",
+          "summary": "あるリージョンのバケットに保存されたオブジェクトを、別のリージョンのバケットへ自動で非同期に複製する機能。",
+          "why": "「別リージョンへ自動でコピーし続ける」はクロスリージョンレプリケーション。",
+          "use": "重要な契約書のバケットを大阪リージョンにも複製し、東京リージョンの大規模障害に備える。"
+        },
+        {
+          "text": "S3 ライフサイクルルール",
+          "summary": "ストレージクラスの移行や削除の自動化。",
+          "why": "別リージョンへの複製はしない。",
+          "use": "古いデータを安いクラスへ移す。"
+        },
+        {
+          "text": "Amazon CloudFront",
+          "summary": "エッジでのキャッシュ配信。",
+          "why": "キャッシュは一時的なもので、災害対策用の複製ではない。",
+          "use": "画像を世界中に配信する。"
+        },
+        {
+          "text": "S3 Transfer Acceleration",
+          "summary": "アップロードの高速化。",
+          "why": "複製の仕組みではない。",
+          "use": "海外から速くアップロードする。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "別リージョンへの自動複製＝クロスリージョンレプリケーション（バージョニングの有効化が前提）。同じリージョン内の別バケットへの複製もできる。",
+      "docs": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-227",
+      "domain": "Cloud Technology and Services",
+      "q": "ニュースサイトのデータベース (Amazon RDS) は、書き込みは少ないが読み込みが非常に多く、性能が足りなくなってきた。読み込みの処理を分散させたい。最も適したものはどれか。",
+      "options": [
+        {
+          "text": "リードレプリカを追加する",
+          "summary": "元のデータベースのデータを非同期に複製した、読み取り専用のコピー。",
+          "why": "読み込みの問い合わせをレプリカに振り分けることで、元のデータベースの負荷を下げられる。",
+          "use": "記事一覧の表示はリードレプリカから読み、記事の投稿だけを元のデータベースに書き込む。"
+        },
+        {
+          "text": "マルチAZ配置にする",
+          "summary": "別のAZに待機用のデータベースを置き、障害時に自動で切り替える構成。",
+          "why": "主な目的は可用性。従来のマルチAZの待機系は読み込みには使われないため、読み込みの分散にはならない。",
+          "use": "AZの障害時にもデータベースを止めない。"
+        },
+        {
+          "text": "データベースを削除して作り直す",
+          "summary": "作り直すこと。",
+          "why": "負荷の問題は解決しない。",
+          "use": "—"
+        },
+        {
+          "text": "S3 Glacier に移す",
+          "summary": "アーカイブ用のストレージ。",
+          "why": "すぐに読めないため、むしろ遅くなる。",
+          "use": "—"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "リードレプリカ＝読み込みの性能（スケーラビリティ）。マルチAZ＝障害への備え（可用性）。目的で区別する。",
+      "docs": [
+        "https://aws.amazon.com/rds/features/read-replicas/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-228",
+      "domain": "Cloud Technology and Services",
+      "q": "コールセンターのスタッフが、自宅のPCからでも会社の業務アプリを安全に使えるよう、クラウド上の仮想デスクトップを提供したい。データは端末に残したくない。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon WorkSpaces",
+          "summary": "クラウド上のマネージドな仮想デスクトップサービス。WindowsやLinuxのデスクトップを、さまざまな端末から利用できる。",
+          "why": "「仮想デスクトップ」「端末にデータを残さない」は WorkSpaces。",
+          "use": "在宅勤務のスタッフに仮想デスクトップを配り、業務データはクラウド側だけに置く。"
+        },
+        {
+          "text": "Amazon Lightsail",
+          "summary": "手軽な仮想サーバー。",
+          "why": "サーバーであって、社員が使う仮想デスクトップの管理サービスではない。",
+          "use": "小規模なWebサイトを立ち上げる。"
+        },
+        {
+          "text": "AWS Client VPN",
+          "summary": "社員の端末からAWSのネットワークへ安全に接続するVPN。",
+          "why": "接続は安全になるが、作業は手元の端末で行うため、データが端末に残りうる。",
+          "use": "自宅のPCから社内システムに安全に接続する。"
+        },
+        {
+          "text": "Amazon Connect",
+          "summary": "クラウド型のコンタクトセンターサービス。",
+          "why": "電話やチャットの窓口の仕組みで、仮想デスクトップではない。",
+          "use": "問い合わせ窓口の電話を受ける仕組みを作る。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "「仮想デスクトップ (VDI)」「DaaS」は WorkSpaces。安全な接続だけでよいなら Client VPN。",
+      "docs": [
+        "https://aws.amazon.com/workspaces/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-229",
+      "domain": "Cloud Technology and Services",
+      "q": "MongoDB を使って開発したアプリのデータベースを、運用の手間を減らすために、互換性のあるマネージドなドキュメントデータベースへ移したい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon DocumentDB（MongoDB 互換）",
+          "summary": "JSON形式のドキュメントを保存する、MongoDB互換のマネージドなデータベース。",
+          "why": "「MongoDB互換」「ドキュメントデータベース」は DocumentDB。",
+          "use": "商品カタログのように項目が商品ごとに違うデータを、既存の MongoDB 向けコードを活かしたまま移す。"
+        },
+        {
+          "text": "Amazon Neptune",
+          "summary": "グラフデータベース。",
+          "why": "MongoDBとの互換性はない。",
+          "use": "人や物のつながりを分析する。"
+        },
+        {
+          "text": "Amazon Redshift",
+          "summary": "データウェアハウス。",
+          "why": "アプリのデータベースの置き換えではない。",
+          "use": "大量データを集計する。"
+        },
+        {
+          "text": "Amazon RDS for MySQL",
+          "summary": "リレーショナルデータベース。",
+          "why": "MongoDBとの互換性はなく、アプリの大幅な書き換えが必要になる。",
+          "use": "表形式の業務データを管理する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "互換性で選ぶデータベース：MySQL/PostgreSQL＝Aurora/RDS、MongoDB＝DocumentDB、Apache Cassandra＝Keyspaces、Redis/Memcached＝ElastiCache。",
+      "docs": [
+        "https://aws.amazon.com/documentdb/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-230",
+      "domain": "Cloud Technology and Services",
+      "q": "毎日のリソース作成やデータ移動を、スクリプトやアプリのコードから自動で実行したい。プログラムからAWSを操作する手段として使えるものはどれか。2つ選べ。",
+      "options": [
+        {
+          "text": "AWS コマンドラインインターフェイス (AWS CLI)",
+          "summary": "ターミナルからコマンドでAWSを操作するツール。シェルスクリプトに組み込める。",
+          "why": "プログラムからの操作手段の1つ。",
+          "use": "毎晩のバックアップ作業を、AWS CLI のコマンドを並べたスクリプトで自動化する。"
+        },
+        {
+          "text": "AWS SDK",
+          "summary": "Python、JavaScript、Java などのプログラミング言語からAWSを操作するためのライブラリ。",
+          "why": "プログラムからの操作手段の1つ。",
+          "use": "自社アプリのコードから、アップロードされた画像をS3に保存する。"
+        },
+        {
+          "text": "AWS マネジメントコンソール",
+          "summary": "ブラウザで画面を見ながら操作するWebの管理画面。",
+          "why": "人が手で操作するためのもので、スクリプトからの自動化には使わない。",
+          "use": "初めて使うサービスの設定を画面で確認しながら行う。"
+        },
+        {
+          "text": "AWS Artifact",
+          "summary": "コンプライアンス文書のポータル。",
+          "why": "AWSを操作する手段ではない。",
+          "use": "監査用の報告書を入手する。"
+        },
+        {
+          "text": "AWS Trusted Advisor",
+          "summary": "アカウントの点検と改善提案。",
+          "why": "リソースを操作する手段ではない。",
+          "use": "設定の改善点を見つける。"
+        }
+      ],
+      "answer": [
+        0,
+        1
+      ],
+      "point": "AWSの操作方法：人が画面で＝マネジメントコンソール、コマンドで＝CLI（ブラウザで使えるのが CloudShell）、コードで＝SDK、インフラをまとめて＝CloudFormation。",
+      "docs": [
+        "https://aws.amazon.com/cli/",
+        "https://aws.amazon.com/developer/tools/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-231",
+      "domain": "Cloud Technology and Services",
+      "q": "手元のPCにツールをインストールしたり認証情報を設定したりせずに、ブラウザからすぐに AWS CLI のコマンドを実行したい。最も適したものはどれか。",
+      "options": [
+        {
+          "text": "AWS CloudShell",
+          "summary": "マネジメントコンソールから起動できる、ブラウザ上のシェル環境。ログイン中の権限で AWS CLI などをすぐに使える。",
+          "why": "「インストール不要」「ブラウザから」「すぐCLI」は CloudShell。",
+          "use": "会社貸与のPCにツールを入れられない状況で、ブラウザから設定確認のコマンドを実行する。"
+        },
+        {
+          "text": "AWS SDK",
+          "summary": "プログラミング言語用のライブラリ。",
+          "why": "自分の開発環境に導入して使うもので、ブラウザからすぐ使うものではない。",
+          "use": "アプリのコードからAWSを操作する。"
+        },
+        {
+          "text": "Amazon WorkSpaces",
+          "summary": "仮想デスクトップ。",
+          "why": "CLI を実行することもできるが、デスクトップ環境の提供が目的で、手軽にコマンドを打つための手段としては過剰。",
+          "use": "在宅勤務の社員に仮想デスクトップを配る。"
+        },
+        {
+          "text": "AWS Direct Connect",
+          "summary": "専用線。",
+          "why": "コマンドの実行環境ではない。",
+          "use": "オンプレミスとAWSを接続する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "CloudShell＝ブラウザの中のCLI。認証はコンソールにログインした権限がそのまま使われる。",
+      "docs": [
+        "https://aws.amazon.com/cloudshell/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-232",
+      "domain": "Cloud Technology and Services",
+      "q": "同じアプリを東京リージョンと米国のリージョンで動かしている。利用者ごとに、通信の遅延が最も小さいリージョンへ自動で接続させたい。Route 53 のどのルーティングポリシーを使うべきか。",
+      "options": [
+        {
+          "text": "レイテンシーベースルーティング",
+          "summary": "利用者から見て遅延が最も小さいリージョンのリソースへ振り分けるルーティング。",
+          "why": "「遅延が最も小さいリージョンへ」はレイテンシーベース。",
+          "use": "日本の利用者は東京、米国の利用者は米国のリージョンへ自動で接続させ、応答を速くする。"
+        },
+        {
+          "text": "フェイルオーバールーティング",
+          "summary": "主系に障害があったときに、予備系へ切り替えるルーティング。",
+          "why": "目的は障害時の切り替えで、遅延の最小化ではない。",
+          "use": "本番サイトが落ちたら、お詫びページへ切り替える。"
+        },
+        {
+          "text": "シンプルルーティング",
+          "summary": "1つの宛先へそのまま振り向ける基本のルーティング。",
+          "why": "利用者ごとの最適化はしない。",
+          "use": "1台のWebサーバーにドメインを向ける。"
+        },
+        {
+          "text": "加重ルーティング",
+          "summary": "決めた割合で複数の宛先に振り分けるルーティング。",
+          "why": "割合での振り分けで、遅延は考慮しない。",
+          "use": "新しいバージョンに1割だけ通信を流して試す。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "Route 53 の主なルーティング：シンプル、加重（割合）、レイテンシー（速さ）、フェイルオーバー（障害時）、位置情報（国や地域で振り分け）。",
+      "docs": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-233",
+      "domain": "Cloud Technology and Services",
+      "q": "プライベートサブネットにあるEC2から S3 へアクセスしたい。インターネットやNATゲートウェイを経由せず、AWSのネットワーク内だけで通信させたい。最も適したものはどれか。",
+      "options": [
+        {
+          "text": "S3 向けの VPC エンドポイント（ゲートウェイエンドポイント）",
+          "summary": "VPC からインターネットを経由せずに、S3 や DynamoDB へ私的に接続するための入口。",
+          "why": "「インターネットを通らずに S3 へ」は VPC エンドポイント。NATゲートウェイの処理料金も減らせる。",
+          "use": "外部に公開しない分析サーバーが、大量のデータを S3 から安全に読み込む。"
+        },
+        {
+          "text": "インターネットゲートウェイ",
+          "summary": "VPCとインターネットの出入口。",
+          "why": "インターネットを経由する経路になる。",
+          "use": "公開Webサーバーをインターネットにつなぐ。"
+        },
+        {
+          "text": "AWS Direct Connect",
+          "summary": "オンプレミスとの専用線。",
+          "why": "VPC内のEC2からS3への経路を作るものではない。",
+          "use": "本社とAWSを専用線でつなぐ。"
+        },
+        {
+          "text": "Amazon CloudFront",
+          "summary": "CDN。",
+          "why": "VPC内からS3へ私的に接続する仕組みではない。",
+          "use": "S3のコンテンツを世界中に配信する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "VPCからAWSのサービスへ「インターネットを通らずに」つなぐのは VPC エンドポイント（多くのサービスは PrivateLink を使うインターフェイスエンドポイント）。",
+      "docs": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-234",
+      "domain": "Cloud Technology and Services",
+      "q": "在宅勤務の社員が、それぞれのノートPCから、AWSのVPC内にある社内システムへ安全に接続できるようにしたい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "AWS Client VPN",
+          "summary": "個々の利用者の端末から、AWSやオンプレミスのネットワークへ安全に接続するためのマネージドなVPNサービス。",
+          "why": "「社員それぞれの端末から」の接続は Client VPN。",
+          "use": "社員がノートPCのVPNクライアントで接続し、VPC内の勤怠システムを使う。"
+        },
+        {
+          "text": "AWS Site-to-Site VPN",
+          "summary": "拠点のネットワークとVPCを、ネットワーク同士でつなぐVPN。",
+          "why": "拠点同士の接続で、個々の社員の端末からの接続ではない。",
+          "use": "支店のネットワークとVPCをつなぐ。"
+        },
+        {
+          "text": "AWS Direct Connect",
+          "summary": "データセンターとAWSの専用線。",
+          "why": "個人の自宅からの接続には使わない。",
+          "use": "本社のデータセンターとAWSを専用線でつなぐ。"
+        },
+        {
+          "text": "Amazon Route 53",
+          "summary": "DNSサービス。",
+          "why": "安全な接続の経路を作るものではない。",
+          "use": "社内システムのドメイン名を管理する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "VPNは2種類：人（端末）から＝Client VPN、拠点（ネットワーク）から＝Site-to-Site VPN。",
+      "docs": [
+        "https://aws.amazon.com/vpn/client-vpn/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-235",
+      "domain": "Cloud Technology and Services",
+      "q": "フロントエンドの開発者が、インフラの専門知識がなくても、Webアプリやモバイルアプリのホスティング、認証、データ保存などのバックエンドを素早く用意したい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "AWS Amplify",
+          "summary": "フロントエンドのWebアプリやモバイルアプリの開発者が、ホスティングやバックエンドの機能を素早く構築・デプロイできるツールとサービス群。",
+          "why": "「フロントエンドの開発者」「素早く」「Web・モバイル」は Amplify。",
+          "use": "React で作ったWebアプリを Git にプッシュするだけで自動でビルド・公開し、ログイン機能も追加する。"
+        },
+        {
+          "text": "AWS Outposts",
+          "summary": "AWSのハードウェアを自社施設に置くサービス。",
+          "why": "アプリ開発の支援ツールではない。",
+          "use": "工場内でAWSのサービスを動かす。"
+        },
+        {
+          "text": "Amazon EMR",
+          "summary": "ビッグデータ処理の基盤。",
+          "why": "Webアプリの開発支援ではない。",
+          "use": "Spark で大量データを処理する。"
+        },
+        {
+          "text": "AWS Snow ファミリー",
+          "summary": "物理デバイスでのデータ移行。",
+          "why": "アプリ開発とは無関係。",
+          "use": "大容量データを物理的に運ぶ。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "「フロントエンド」「Web・モバイルアプリを素早く」は Amplify。",
+      "docs": [
+        "https://aws.amazon.com/amplify/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-236",
+      "domain": "Cloud Technology and Services",
+      "q": "複数のマイクロサービスにまたがるアプリで、一部のリクエストだけ応答が遅い。リクエストがどのサービスを通り、どこで時間がかかっているかを追跡して可視化したい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "AWS X-Ray",
+          "summary": "アプリケーションへのリクエストを、通過するサービスごとに追跡（トレース）し、遅延やエラーの箇所を可視化するサービス。",
+          "why": "「リクエストの追跡」「どこで時間がかかっているか」は X-Ray。",
+          "use": "注文処理が遅い原因が、在庫サービスから外部APIへの呼び出しにあることを突き止める。"
+        },
+        {
+          "text": "AWS CloudTrail",
+          "summary": "AWSのAPI呼び出しの記録。",
+          "why": "誰がAWSを操作したかの記録で、アプリ内部のリクエストの流れや処理時間は分からない。",
+          "use": "誰がリソースを変更したかを調べる。"
+        },
+        {
+          "text": "AWS Config",
+          "summary": "リソースの構成の記録と評価。",
+          "why": "性能の分析はしない。",
+          "use": "設定がルールどおりか評価する。"
+        },
+        {
+          "text": "Amazon Inspector",
+          "summary": "脆弱性スキャン。",
+          "why": "性能の分析はしない。",
+          "use": "脆弱性を見つける。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "監視の道具：指標とログ＝CloudWatch、リクエストの追跡＝X-Ray、操作の監査＝CloudTrail。",
+      "docs": [
+        "https://aws.amazon.com/xray/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-237",
+      "domain": "Cloud Technology and Services",
+      "q": "ソースコードの変更をきっかけに、ビルド、テスト、本番へのデプロイまでの一連の流れを自動で進めるパイプライン（CI/CD）を構築したい。この流れ全体を管理するサービスはどれか。",
+      "options": [
+        {
+          "text": "AWS CodePipeline",
+          "summary": "ソースの取得、ビルド、テスト、デプロイの各段階をつなぎ、リリースの流れを自動化する継続的デリバリーのサービス。",
+          "why": "「一連の流れ全体を管理」は CodePipeline。各段階では CodeBuild や CodeDeploy などを呼び出す。",
+          "use": "GitHub にプッシュすると、自動でビルドとテストが走り、承認後に本番へデプロイされるようにする。"
+        },
+        {
+          "text": "AWS CloudFormation",
+          "summary": "インフラをコードで構築する。",
+          "why": "パイプラインの中で使われることはあるが、ビルドからデプロイまでの流れ全体を管理するものではない。",
+          "use": "アプリの実行環境を作る。"
+        },
+        {
+          "text": "Amazon CloudWatch",
+          "summary": "監視サービス。",
+          "why": "リリースの流れは管理しない。",
+          "use": "デプロイ後のエラー数を監視する。"
+        },
+        {
+          "text": "AWS Trusted Advisor",
+          "summary": "アカウントの点検。",
+          "why": "リリースの流れとは無関係。",
+          "use": "設定の改善点を見つける。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "CI/CD の役割分担：流れ全体＝CodePipeline、ビルドとテスト＝CodeBuild、デプロイ＝CodeDeploy。",
+      "docs": [
+        "https://aws.amazon.com/codepipeline/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-238",
+      "domain": "Cloud Technology and Services",
+      "q": "開発チームが CI/CD を整備している。ソースコードのビルドとテストの実行、そしてアプリケーションのデプロイの自動化に、それぞれ使うサービスはどれか。2つ選べ。",
+      "options": [
+        {
+          "text": "AWS CodeBuild",
+          "summary": "ソースコードのコンパイル、テストの実行、デプロイ用パッケージの作成を行うフルマネージドなビルドサービス。",
+          "why": "「ビルドとテスト」は CodeBuild。ビルド用のサーバーを管理する必要がない。",
+          "use": "プルリクエストのたびに自動でテストを実行し、失敗したら開発者に知らせる。"
+        },
+        {
+          "text": "AWS CodeDeploy",
+          "summary": "EC2、オンプレミスのサーバー、Lambda、ECS へのアプリケーションのデプロイを自動化するサービス。",
+          "why": "「デプロイの自動化」は CodeDeploy。",
+          "use": "新しいバージョンを数台ずつ入れ替え、問題があれば自動で元に戻す。"
+        },
+        {
+          "text": "Amazon Polly",
+          "summary": "テキストの音声変換。",
+          "why": "CI/CD とは無関係。",
+          "use": "—"
+        },
+        {
+          "text": "Amazon Macie",
+          "summary": "S3の機密データの検出。",
+          "why": "CI/CD とは無関係。",
+          "use": "—"
+        },
+        {
+          "text": "AWS Artifact",
+          "summary": "コンプライアンス文書のポータル。",
+          "why": "CI/CD とは無関係。",
+          "use": "—"
+        }
+      ],
+      "answer": [
+        0,
+        1
+      ],
+      "point": "「Code」で始まる開発者ツール：CodeBuild（ビルド・テスト）、CodeDeploy（デプロイ）、CodePipeline（流れ全体）。",
+      "docs": [
+        "https://aws.amazon.com/codebuild/",
+        "https://aws.amazon.com/codedeploy/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-239",
+      "domain": "Cloud Technology and Services",
+      "q": "数十テラバイトのログを、Apache Spark や Hadoop を使って分散処理したい。クラスターの構築や管理の手間を減らしたい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon EMR",
+          "summary": "Apache Spark、Hadoop などのオープンソースのビッグデータ処理フレームワークを、マネージドに動かすサービス。",
+          "why": "「Spark」「Hadoop」「ビッグデータの分散処理」は EMR。",
+          "use": "広告配信会社が、毎晩数十テラバイトの配信ログを Spark で集計し、翌朝のレポートを作る。"
+        },
+        {
+          "text": "Amazon RDS",
+          "summary": "リレーショナルデータベース。",
+          "why": "大規模な分散処理の基盤ではない。",
+          "use": "業務データを管理する。"
+        },
+        {
+          "text": "Amazon Lightsail",
+          "summary": "手軽な仮想サーバー。",
+          "why": "ビッグデータの分散処理には向かない。",
+          "use": "小規模なWebサイトを運用する。"
+        },
+        {
+          "text": "Amazon SES",
+          "summary": "メール送信サービス。",
+          "why": "データ処理とは無関係。",
+          "use": "会員向けのメールを送る。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "分析サービスの使い分け：Spark/Hadoop＝EMR、S3にSQL＝Athena、データウェアハウス＝Redshift、ETL＝Glue、ストリーミング＝Kinesis。",
+      "docs": [
+        "https://aws.amazon.com/emr/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-240",
+      "domain": "Cloud Technology and Services",
+      "q": "アプリケーションのログを集めて、キーワードで高速に全文検索し、エラーの傾向をダッシュボードで可視化したい。最も適したマネージドサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon OpenSearch Service",
+          "summary": "OpenSearch を使った検索・分析エンジンをマネージドで提供するサービス。ログ分析、全文検索、可視化に使われる。",
+          "why": "「全文検索」「ログ分析」「可視化」は OpenSearch Service。",
+          "use": "全サーバーのログを集め、特定のエラーメッセージを数秒で検索し、発生件数の推移をダッシュボードで見る。"
+        },
+        {
+          "text": "Amazon DynamoDB",
+          "summary": "キーバリュー型のNoSQL。",
+          "why": "キーでの読み書きは得意だが、全文検索には向かない。",
+          "use": "セッション情報を保存する。"
+        },
+        {
+          "text": "Amazon Polly",
+          "summary": "テキストの音声変換。",
+          "why": "検索とは無関係。",
+          "use": "文章を読み上げる。"
+        },
+        {
+          "text": "AWS Backup",
+          "summary": "バックアップの一元管理。",
+          "why": "検索や可視化の機能はない。",
+          "use": "データのバックアップを管理する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "「全文検索」「ログ分析」「検索エンジン」は OpenSearch Service（旧 Elasticsearch Service）。",
+      "docs": [
+        "https://aws.amazon.com/opensearch-service/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-241",
+      "domain": "Cloud Technology and Services",
+      "q": "ある通販会社は、電話やチャットでの問い合わせ窓口（コンタクトセンター）を、専用の機器を買わずにクラウドで素早く立ち上げたい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon Connect",
+          "summary": "クラウドベースのコンタクトセンターサービス。電話やチャットの窓口を、使った分だけの料金で構築できる。",
+          "why": "「コンタクトセンター」「電話・チャット窓口」は Connect。",
+          "use": "繁忙期だけオペレーターを増やし、通話の録音や自動音声応答もクラウドで用意する。"
+        },
+        {
+          "text": "Amazon SNS",
+          "summary": "通知の一斉配信。",
+          "why": "顧客との双方向の窓口ではない。",
+          "use": "障害の通知をメールやSMSで送る。"
+        },
+        {
+          "text": "Amazon WorkSpaces",
+          "summary": "仮想デスクトップ。",
+          "why": "オペレーターの作業環境にはなるが、電話やチャットの窓口の仕組みではない。",
+          "use": "在宅のオペレーターに仮想デスクトップを配る。"
+        },
+        {
+          "text": "AWS Direct Connect",
+          "summary": "専用線。",
+          "why": "名前は似ているが、コンタクトセンターとは無関係。",
+          "use": "オンプレミスとAWSを接続する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "「コンタクトセンター」「コールセンター」は Amazon Connect。名前の似た Direct Connect（専用線）と混同しない。",
+      "docs": [
+        "https://aws.amazon.com/connect/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-242",
+      "domain": "Cloud Technology and Services",
+      "q": "会員登録の確認メールや注文確認メール、キャンペーンのお知らせなどを、アプリから大量に送信したい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon Simple Email Service (Amazon SES)",
+          "summary": "アプリケーションからメールを送受信するためのクラウドのメールサービス。取引メールやマーケティングメールの大量送信に使われる。",
+          "why": "「アプリからの大量のメール送信」は SES。",
+          "use": "ECサイトが、注文確認や発送通知のメールを毎日数十万通送る。"
+        },
+        {
+          "text": "Amazon SQS",
+          "summary": "メッセージキュー。",
+          "why": "システム間でメッセージを受け渡すもので、人へのメール送信のサービスではない。",
+          "use": "注文処理を非同期にする。"
+        },
+        {
+          "text": "Amazon Connect",
+          "summary": "コンタクトセンター。",
+          "why": "電話やチャットの窓口で、メールの大量送信のサービスではない。",
+          "use": "問い合わせの電話を受ける。"
+        },
+        {
+          "text": "Amazon Kinesis Data Streams",
+          "summary": "ストリーミングデータの取り込み。",
+          "why": "メール送信の機能はない。",
+          "use": "リアルタイムのデータを取り込む。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "メールを大量に送る＝SES。システムの通知をメールでも受けたい（運用者向け）＝SNS。",
+      "docs": [
+        "https://aws.amazon.com/ses/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "bank": "clf",
+  "packId": "pack-011",
+  "name": "追加問題（第2弾）: 請求、料金、サポート",
+  "created": "2026-10-16",
+  "questions": [
+    {
+      "id": "clf-243",
+      "domain": "Billing, Pricing, and Support",
+      "q": "サービスそのものには追加料金がかからず、そのサービスを通じて作成・利用したリソースの分だけ課金されるものはどれか。2つ選べ。",
+      "options": [
+        {
+          "text": "AWS IAM",
+          "summary": "ユーザー、グループ、ロール、ポリシーによるアクセス管理。",
+          "why": "IAM の利用自体に追加料金はかからない。",
+          "use": "社員ごとのユーザーやロールを、費用を気にせず必要なだけ作る。"
+        },
+        {
+          "text": "AWS CloudFormation（AWSのリソースを作成する場合）",
+          "summary": "テンプレートでインフラを構築するサービス。",
+          "why": "AWSのリソースを作る用途では CloudFormation 自体に追加料金はかからず、作成したEC2などの料金だけがかかる（一部のサードパーティの拡張機能には料金がかかる）。",
+          "use": "テンプレートで検証環境を何度作り直しても、CloudFormation 自体の費用は発生しない。"
+        },
+        {
+          "text": "NATゲートウェイ",
+          "summary": "プライベートサブネットから外向きに通信するための中継。",
+          "why": "時間と処理したデータ量に応じて課金される。",
+          "use": "—"
+        },
+        {
+          "text": "EC2 のオンデマンドインスタンス",
+          "summary": "仮想サーバー。",
+          "why": "稼働時間などに応じて課金される。",
+          "use": "—"
+        },
+        {
+          "text": "Amazon RDS",
+          "summary": "マネージドなリレーショナルデータベース。",
+          "why": "インスタンスの稼働時間やストレージに応じて課金される。",
+          "use": "—"
+        }
+      ],
+      "answer": [
+        0,
+        1
+      ],
+      "point": "それ自体は無料で、作ったリソースにだけ課金される代表例：IAM、CloudFormation、Elastic Beanstalk、Auto Scaling（いずれも使ったEC2などには課金）。",
+      "docs": [
+        "https://aws.amazon.com/iam/faqs/",
+        "https://aws.amazon.com/cloudformation/pricing/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-244",
+      "domain": "Billing, Pricing, and Support",
+      "q": "3年間のリザーブドインスタンスを購入したいが、期間中にアプリの要件が変わり、別のインスタンスファミリーに変更する可能性がある。割引を受けつつ柔軟性も残したい場合に適した種類はどれか。",
+      "options": [
+        {
+          "text": "コンバーティブルリザーブドインスタンス",
+          "summary": "期間中に、インスタンスファミリーなどの属性が異なる別のリザーブドインスタンスに交換できる種類。",
+          "why": "「期間中に変更する可能性」に対応できる。そのぶん割引率はスタンダードより低い。",
+          "use": "3年の間に新世代のインスタンスへ移る可能性があるシステムで、交換できる形で契約しておく。"
+        },
+        {
+          "text": "スタンダードリザーブドインスタンス",
+          "summary": "割引率が最も大きい種類。インスタンスファミリーを変える交換はできない。",
+          "why": "柔軟性の要件を満たさない。",
+          "use": "構成が長期間変わらないことが確実なワークロードに使う。"
+        },
+        {
+          "text": "スポットインスタンス",
+          "summary": "余剰キャパシティを割引で使う方式。",
+          "why": "期間のコミットによる割引ではなく、中断もありうる。",
+          "use": "中断してよいバッチ処理に使う。"
+        },
+        {
+          "text": "オンデマンドインスタンス",
+          "summary": "コミットなしの標準料金。",
+          "why": "割引がない。",
+          "use": "利用期間が読めない検証に使う。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "割引率と柔軟性は引き換え。スタンダードRI（割引大・柔軟性小）、コンバーティブルRI（割引中・交換可）、Savings Plans（さらに柔軟）。",
+      "docs": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/reserved-instances-types.html"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-245",
+      "domain": "Billing, Pricing, and Support",
+      "q": "予算の金額を決めるだけでは気づけない、普段と違う急な支出の増加（設定ミスや消し忘れなど）を、機械学習で自動的に見つけて知らせてほしい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "AWS Cost Anomaly Detection",
+          "summary": "過去の支出パターンを機械学習で学習し、普段と違う支出を検出して通知するサービス。",
+          "why": "「機械学習」「普段と違う支出の検出」は Cost Anomaly Detection。",
+          "use": "検証用に起動した大きなインスタンスの消し忘れによる費用の急増を、月末の請求を待たずに数日のうちに発見する。"
+        },
+        {
+          "text": "AWS Budgets",
+          "summary": "あらかじめ決めた予算やしきい値を超えそうなときに通知する。",
+          "why": "固定のしきい値に基づくもので、普段のパターンとの違いを学習して検出するものではない。",
+          "use": "月の予算の8割に達したら知らせる。"
+        },
+        {
+          "text": "AWS Pricing Calculator",
+          "summary": "利用前の見積もり。",
+          "why": "実際の支出を監視しない。",
+          "use": "新しい構成の費用を見積もる。"
+        },
+        {
+          "text": "AWS Artifact",
+          "summary": "コンプライアンス文書のポータル。",
+          "why": "費用とは無関係。",
+          "use": "監査用の報告書を入手する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "決めた上限を超えたら＝Budgets、いつもと違ったら＝Cost Anomaly Detection、原因を分析＝Cost Explorer。",
+      "docs": [
+        "https://aws.amazon.com/aws-cost-management/aws-cost-anomaly-detection/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    },
+    {
+      "id": "clf-246",
+      "domain": "Billing, Pricing, and Support",
+      "q": "ある会社は、AWS上のインフラの日々の運用（監視、パッチ適用、バックアップ、変更管理、インシデント対応など）を、継続的にAWSに任せたい。最も適したものはどれか。",
+      "options": [
+        {
+          "text": "AWS Managed Services (AMS)",
+          "summary": "AWSのインフラの運用を、AWSが継続的に代行するサービス。",
+          "why": "「日々の運用を継続的に任せる」は AWS Managed Services。",
+          "use": "運用担当者が足りない企業が、基幹システムのAWS環境の監視やパッチ適用をAMSに任せ、自社はアプリの改善に集中する。"
+        },
+        {
+          "text": "AWS Professional Services",
+          "summary": "AWSの専門家チームが、移行や設計などのプロジェクトを支援するサービス。",
+          "why": "主にプロジェクト単位の支援で、日々の運用の代行が中心ではない。",
+          "use": "大規模な移行プロジェクトの設計を、AWSの専門家と一緒に進める。"
+        },
+        {
+          "text": "AWS re:Post",
+          "summary": "コミュニティQ&Aサイト。",
+          "why": "運用の代行はしない。",
+          "use": "技術的な疑問を質問する。"
+        },
+        {
+          "text": "AWS Trusted Advisor",
+          "summary": "アカウントの自動点検。",
+          "why": "改善提案は出すが、運用作業を代行するものではない。",
+          "use": "設定の改善点を見つける。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "AWSから受けられる人的な支援：運用の代行＝AWS Managed Services、プロジェクトの支援＝AWS Professional Services、技術的な問い合わせ＝サポートプラン、パートナー企業＝AWS Partner Network。",
+      "docs": [
+        "https://aws.amazon.com/managed-services/",
+        "https://aws.amazon.com/professional-services/"
+      ],
+      "added": "2026-10-16",
+      "verified": "2026-10-16"
+    }
+  ]
+}

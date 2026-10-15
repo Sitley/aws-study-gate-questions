@@ -1,0 +1,484 @@
+{
+  "bank": "clf",
+  "packId": "pack-007",
+  "name": "追加問題: 請求、料金、サポート",
+  "created": "2026-10-02",
+  "questions": [
+    {
+      "id": "clf-165",
+      "domain": "Billing, Pricing, and Support",
+      "q": "ある会社は、EC2、Fargate、Lambda にまたがって安定した計算資源を使い続ける見込みだ。インスタンスファミリーやリージョンを今後変える可能性もある。1年間の利用を約束して割引を受けるなら、最も柔軟な選択肢はどれか。",
+      "options": [
+        {
+          "text": "Compute Savings Plans",
+          "summary": "1時間あたりの利用金額を1年または3年約束することで割引を受ける仕組み。EC2のファミリーやリージョンが変わっても、Fargate や Lambda にも適用される。",
+          "why": "「複数のサービスにまたがる」「ファミリーやリージョンを変える可能性」に対応できる最も柔軟な割引。",
+          "use": "サーバーからコンテナやサーバーレスへ段階的に移行中の会社が、移行の途中でも割引を失わずに済む。"
+        },
+        {
+          "text": "EC2 Instance Savings Plans",
+          "summary": "特定のリージョンの特定のインスタンスファミリーに約束する Savings Plans。",
+          "why": "割引率は高めだが、ファミリーとリージョンが固定され、Fargate や Lambda には適用されない。",
+          "use": "構成が長期間変わらないことが確実なEC2のワークロードに使う。"
+        },
+        {
+          "text": "スポットインスタンス",
+          "summary": "余剰キャパシティを割引で使う。中断されうる。",
+          "why": "利用の約束による割引ではなく、安定して使い続ける用途にも向かない。",
+          "use": "中断してよいバッチ処理に使う。"
+        },
+        {
+          "text": "オンデマンド",
+          "summary": "約束なしの標準料金。",
+          "why": "割引はない。",
+          "use": "利用量が読めない時期や短期の検証に使う。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "柔軟性の順：Compute Savings Plans ＞ EC2 Instance Savings Plans ≒ リザーブドインスタンス。柔軟なほど割引率はやや下がる。",
+      "docs": [
+        "https://aws.amazon.com/savingsplans/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-166",
+      "domain": "Billing, Pricing, and Support",
+      "q": "ある会社は、物理CPUのソケット数やコア数で課金されるソフトウェアライセンスを持っており、それをAWSでも使いたい（BYOL）。物理サーバーを専有し、ソケットやコアを把握できる購入オプションはどれか。",
+      "options": [
+        {
+          "text": "Dedicated Hosts",
+          "summary": "物理サーバーを丸ごと専有し、その物理的なソケットやコアを確認・管理できる購入オプション。",
+          "why": "物理コア単位のライセンスを持ち込む用途に合う。",
+          "use": "Windows Server や商用データベースの既存ライセンスを持ち込み、ライセンス費用を抑えつつAWSに移行する。"
+        },
+        {
+          "text": "Dedicated Instances",
+          "summary": "他の顧客と物理サーバーを共有しないインスタンス。",
+          "why": "専有ではあるが、どの物理サーバーに置かれるかやソケット・コアの情報までは管理できないため、ライセンス要件を満たしにくい。",
+          "use": "他社とハードウェアを共有しないことが社内規程で求められる場合に使う。"
+        },
+        {
+          "text": "スポットインスタンス",
+          "summary": "余剰キャパシティの割引利用。",
+          "why": "物理サーバーの専有もライセンス管理もできない。",
+          "use": "中断してよい処理を安く回す。"
+        },
+        {
+          "text": "Savings Plans",
+          "summary": "利用金額の約束による割引。",
+          "why": "料金の割引の仕組みで、物理サーバーの専有ではない。",
+          "use": "常時稼働するワークロードの費用を下げる。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "「ライセンスの持ち込み（BYOL）」「ソケット・コア単位」「物理サーバーの可視性」は Dedicated Hosts。",
+      "docs": [
+        "https://aws.amazon.com/ec2/dedicated-hosts/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-167",
+      "domain": "Billing, Pricing, and Support",
+      "q": "1つのAWSアカウントの中で、部署やプロジェクトごとにコストを分けて集計したい。最も適した方法はどれか。",
+      "options": [
+        {
+          "text": "リソースにタグを付け、コスト配分タグとして有効化する",
+          "summary": "「部署＝営業」「プロジェクト＝新アプリ」のようなタグをリソースに付け、請求のレポートでタグごとに集計できるようにする機能。",
+          "why": "アカウントを分けずに、コストを部署やプロジェクト別に配分できる。",
+          "use": "各部署が使ったAWS費用を月次でタグ別に集計し、社内の費用配賦に使う。"
+        },
+        {
+          "text": "AWS Pricing Calculator で見積もる",
+          "summary": "利用前の見積もりツール。",
+          "why": "実際に発生した費用を部署ごとに分けることはできない。",
+          "use": "新しいプロジェクトの予算を見積もる。"
+        },
+        {
+          "text": "AWS Artifact でレポートを取得する",
+          "summary": "コンプライアンス文書のポータル。",
+          "why": "コストの集計とは無関係。",
+          "use": "監査用の報告書を入手する。"
+        },
+        {
+          "text": "AWS Shield Advanced を有効にする",
+          "summary": "DDoS対策の有料プラン。",
+          "why": "コストの集計とは無関係。",
+          "use": "重要なサイトを大規模なDDoS攻撃から守る。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "コストを誰の分か分けたい＝コスト配分タグ（またはアカウント自体を分けて一括請求）。タグは付けるだけでなく、請求の設定で有効化が必要。",
+      "docs": [
+        "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-168",
+      "domain": "Billing, Pricing, and Support",
+      "q": "過去数ヶ月のAWS費用をサービス別・アカウント別にグラフで比較し、どこで費用が増えたのかを調べたい。今後の費用の予測も見たい。最も適したツールはどれか。",
+      "options": [
+        {
+          "text": "AWS Cost Explorer",
+          "summary": "コストと使用量を、期間、サービス、アカウント、タグなどで絞り込んで可視化し、予測も表示するツール。",
+          "why": "「過去の費用の分析」「グラフ」「予測」は Cost Explorer。",
+          "use": "先月の請求額が急増した原因が、検証用に作って消し忘れたデータベースだったと特定する。"
+        },
+        {
+          "text": "AWS Budgets",
+          "summary": "予算を設定して通知する。",
+          "why": "超過の通知が主目的で、原因の深掘りは Cost Explorer の方が向いている。",
+          "use": "月の予算の8割に達したら担当者に知らせる。"
+        },
+        {
+          "text": "AWS Pricing Calculator",
+          "summary": "利用前の見積もり。",
+          "why": "実績の分析には使えない。",
+          "use": "新しいシステムの月額費用を見積もる。"
+        },
+        {
+          "text": "AWS Trusted Advisor",
+          "summary": "アカウントの点検と改善提案。",
+          "why": "費用削減の提案はあるが、費用の推移をグラフで分析するツールではない。",
+          "use": "使われていないリソースを見つける。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "過去を分析して将来を予測＝Cost Explorer、超えそうなら知らせる＝Budgets、使う前に見積もる＝Pricing Calculator。",
+      "docs": [
+        "https://aws.amazon.com/aws-cost-management/aws-cost-explorer/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-169",
+      "domain": "Billing, Pricing, and Support",
+      "q": "経理部が、AWSの利用状況と費用を、リソースやタグの単位まで最も細かいレベルでデータとして出力し、自社の分析ツールで集計したい。最も適したものはどれか。",
+      "options": [
+        {
+          "text": "AWS Cost and Usage Report（Data Exports から出力）",
+          "summary": "AWSの利用状況と費用を、最も細かい明細レベルでS3に出力するレポート。現在は Data Exports 機能から出力する形になっている。",
+          "why": "「最も細かいレベル」「データとして出力」「自社ツールで集計」は Cost and Usage Report。",
+          "use": "毎日出力される明細を Athena で集計し、部署ごとの正確な費用配賦に使う。"
+        },
+        {
+          "text": "AWS Cost Explorer",
+          "summary": "画面上でのコストの可視化と分析。",
+          "why": "手軽な分析には向くが、最も細かい明細を丸ごと出力する用途には Cost and Usage Report が適している。",
+          "use": "費用の増加傾向をグラフで確認する。"
+        },
+        {
+          "text": "AWS Budgets",
+          "summary": "予算の設定と通知。",
+          "why": "明細データの出力機能ではない。",
+          "use": "予算超過を通知する。"
+        },
+        {
+          "text": "AWS Artifact",
+          "summary": "コンプライアンス文書のポータル。",
+          "why": "費用データは扱わない。",
+          "use": "監査用の報告書を入手する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "最も細かい費用データ＝Cost and Usage Report（CUR）。画面で見る＝Cost Explorer。",
+      "docs": [
+        "https://aws.amazon.com/aws-cost-management/aws-cost-and-usage-reporting/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-170",
+      "domain": "Billing, Pricing, and Support",
+      "q": "セキュリティ製品など、他社のソフトウェアを探して購入し、費用をAWSの請求にまとめて支払いたい。最も適したものはどれか。",
+      "options": [
+        {
+          "text": "AWS Marketplace",
+          "summary": "他社のソフトウェア、SaaS、データ、AMIなどを探し、購入し、AWSの請求でまとめて支払えるデジタルカタログ。",
+          "why": "「他社のソフトウェアを購入」「AWSの請求で支払い」は Marketplace。",
+          "use": "新たな取引先との契約手続きをせずに、ファイアウォール製品を Marketplace で購入し、AWSの請求書でまとめて支払う。"
+        },
+        {
+          "text": "AWS Partner Network (APN)",
+          "summary": "AWSを使って事業を行うパートナー企業のプログラム。",
+          "why": "パートナー企業を探す入口にはなるが、ソフトウェアを購入して請求をまとめる場ではない。",
+          "use": "移行を支援してくれるコンサルティング会社を探す。"
+        },
+        {
+          "text": "AWS Artifact",
+          "summary": "コンプライアンス文書のポータル。",
+          "why": "ソフトウェアの購入はできない。",
+          "use": "監査用の報告書を入手する。"
+        },
+        {
+          "text": "AWS Pricing Calculator",
+          "summary": "AWSサービスの見積もりツール。",
+          "why": "他社のソフトウェアの購入はできない。",
+          "use": "AWSの利用料金を見積もる。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "他社の製品を買う＝Marketplace、他社の人（専門家）に頼む＝Partner Network。",
+      "docs": [
+        "https://aws.amazon.com/marketplace/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-171",
+      "domain": "Billing, Pricing, and Support",
+      "q": "AWSのデータ転送料金について、一般に料金がかからないものはどれか。",
+      "options": [
+        {
+          "text": "インターネットからAWSへのデータ受信（インバウンド）",
+          "summary": "外部からAWSにデータを送り込む方向の通信。",
+          "why": "インターネットからAWSへの受信は、一般に料金がかからない。",
+          "use": "大量のデータをAWSに取り込むときは、転送料金より保存料金や処理料金を中心に見積もる。"
+        },
+        {
+          "text": "AWSからインターネットへのデータ送信（アウトバウンド）",
+          "summary": "AWSから外部の利用者にデータを送る方向の通信。",
+          "why": "一定の無料枠を超えると、量に応じて料金がかかる。",
+          "use": "動画配信サービスでは、送信量の費用が大きくなりやすいため、CloudFront の活用などで最適化する。"
+        },
+        {
+          "text": "異なるリージョン間のデータ転送",
+          "summary": "例えば東京リージョンから大阪リージョンへの転送。",
+          "why": "料金がかかる。",
+          "use": "災害対策で別リージョンにバックアップを複製するときは、転送料金も見積もりに含める。"
+        },
+        {
+          "text": "NATゲートウェイを経由したデータ処理",
+          "summary": "NATゲートウェイで処理されたデータ量。",
+          "why": "時間料金に加えて、処理したデータ量に応じた料金がかかる。",
+          "use": "プライベートサブネットから大量のデータを外部に送る構成では、NATゲートウェイの費用に注意する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "入るのは無料、出るのは有料、が基本。リージョン間やAZ間の転送にも料金がかかることがある。",
+      "docs": [
+        "https://aws.amazon.com/ec2/pricing/on-demand/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-172",
+      "domain": "Billing, Pricing, and Support",
+      "q": "社内にAWSの専門家がいない会社が、移行の設計と実施を支援してくれる、AWSの認定を受けたコンサルティング企業を探したい。最も適したものはどれか。",
+      "options": [
+        {
+          "text": "AWS Partner Network (APN) のパートナー",
+          "summary": "AWSの認定や実績を持つコンサルティング企業やソフトウェア企業のネットワーク。パートナーを検索する仕組みもある。",
+          "why": "「専門家の支援を受けたい」「認定を受けた企業を探す」は APN。",
+          "use": "AWSの移行実績のあるパートナー企業に、現状分析から移行の実施までを委託する。"
+        },
+        {
+          "text": "AWS Marketplace",
+          "summary": "他社のソフトウェアやSaaSを購入する場。",
+          "why": "ソフトウェアの購入が中心で、移行プロジェクトの支援企業を探す第一の場ではない。",
+          "use": "監視ツールやセキュリティ製品を購入する。"
+        },
+        {
+          "text": "AWS Trusted Advisor",
+          "summary": "アカウントの自動点検。",
+          "why": "人による設計や移行の支援は提供しない。",
+          "use": "設定の改善点を見つける。"
+        },
+        {
+          "text": "AWS Budgets",
+          "summary": "予算の設定と通知。",
+          "why": "支援企業を探すものではない。",
+          "use": "予算超過を通知する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "支援を受ける手段：パートナー企業（APN）、AWS自身の専門家集団（AWS Professional Services）、サポートプランの技術支援。",
+      "docs": [
+        "https://aws.amazon.com/partners/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-173",
+      "domain": "Billing, Pricing, and Support",
+      "q": "AWSの技術的な疑問について、他のユーザーやAWSの専門家が回答する公式のコミュニティQ&Aサイトはどれか。",
+      "options": [
+        {
+          "text": "AWS re:Post",
+          "summary": "AWSが運営する公式のコミュニティQ&Aサイト。他のユーザーやAWSの専門家が質問に回答し、よくある質問をまとめた記事も公開されている。",
+          "why": "「コミュニティ」「Q&A」は re:Post。",
+          "use": "ベーシックサポートのため技術サポートに問い合わせられない学習者が、re:Post で設定の疑問を質問し、過去の回答も検索する。"
+        },
+        {
+          "text": "AWS Artifact",
+          "summary": "コンプライアンス文書のポータル。",
+          "why": "Q&Aのコミュニティではない。",
+          "use": "監査用の報告書を入手する。"
+        },
+        {
+          "text": "AWS Marketplace",
+          "summary": "他社ソフトウェアの購入の場。",
+          "why": "Q&Aのコミュニティではない。",
+          "use": "ソフトウェアを購入する。"
+        },
+        {
+          "text": "AWS Health Dashboard",
+          "summary": "AWSのサービスの障害や、自分のアカウントに影響するイベントを知らせる画面。",
+          "why": "Q&Aのコミュニティではない。",
+          "use": "障害が自社のリソースに影響しているかを確認する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "情報源の使い分け：コミュニティで質問＝re:Post、公式の手順＝ドキュメント、障害情報＝Health Dashboard、問い合わせ＝サポートセンター（有料プランで技術サポート）。",
+      "docs": [
+        "https://repost.aws/"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-174",
+      "domain": "Billing, Pricing, and Support",
+      "q": "AWS側の障害や予定されたメンテナンスが、自分のアカウントのどのリソースに影響するのかを、個別の通知として確認したい。最も適したものはどれか。",
+      "options": [
+        {
+          "text": "AWS Health Dashboard",
+          "summary": "AWSのサービス全体の稼働状況と、自分のアカウントのリソースに影響するイベント（障害、予定メンテナンスなど）を表示・通知するサービス。",
+          "why": "「自分のアカウントに影響するイベント」「個別の通知」は Health Dashboard。",
+          "use": "AWSが予定しているハードウェアのメンテナンスで再起動が必要になるインスタンスを事前に把握し、業務時間外に対応する。"
+        },
+        {
+          "text": "Amazon CloudWatch",
+          "summary": "自分のリソースの指標やログの監視。",
+          "why": "自分のリソースの状態は見られるが、AWS側の障害や予定メンテナンスの情報源ではない。",
+          "use": "サーバーのCPU使用率を監視する。"
+        },
+        {
+          "text": "AWS CloudTrail",
+          "summary": "API呼び出しの記録。",
+          "why": "AWS側のイベント情報は扱わない。",
+          "use": "誰がどの操作をしたかを調べる。"
+        },
+        {
+          "text": "AWS re:Post",
+          "summary": "コミュニティQ&Aサイト。",
+          "why": "アカウント個別の障害通知ではない。",
+          "use": "技術的な疑問を質問する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "AWS側の都合（障害、メンテナンス）＝Health Dashboard、自分のリソースの状態＝CloudWatch。",
+      "docs": [
+        "https://docs.aws.amazon.com/health/latest/ug/aws-health-concepts-and-terms.html"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-175",
+      "domain": "Billing, Pricing, and Support",
+      "q": "24時間365日稼働している Amazon RDS のデータベースの費用を下げたい。CPU使用率は平均10%程度と低い。効果的な方法はどれか。2つ選べ。",
+      "options": [
+        {
+          "text": "リザーブドインスタンスを購入する",
+          "summary": "1年または3年の利用を約束して、オンデマンドより安くする購入方法。",
+          "why": "常時稼働しているデータベースは、約束による割引の効果が最も大きい。",
+          "use": "当面構成が変わらない基幹システムのデータベースを、1年分のリザーブドで契約する。"
+        },
+        {
+          "text": "インスタンスサイズを、実際の使用量に合ったものに下げる（適正化）",
+          "summary": "過剰な性能のリソースを、必要十分なサイズに変えること（ライトサイジング）。",
+          "why": "CPU使用率が常に低いのは、サイズが大きすぎるサイン。",
+          "use": "使用率のデータを確認し、ひとつ下のサイズに変更して費用を半分近くにする。"
+        },
+        {
+          "text": "インスタンスサイズを大きくする",
+          "summary": "性能を上げる変更。",
+          "why": "費用が上がり、低い使用率をさらに下げるだけ。",
+          "use": "—"
+        },
+        {
+          "text": "マルチAZ配置を追加する",
+          "summary": "別のAZに待機系を置く構成。",
+          "why": "可用性は上がるが、費用は増える。",
+          "use": "—（可用性が必要な場合は、費用が増えることを理解したうえで採用する）"
+        },
+        {
+          "text": "スポットインスタンスに切り替える",
+          "summary": "中断されうる割引インスタンス。",
+          "why": "RDSはスポットに対応しておらず、常時稼働のデータベースには中断のリスクも合わない。",
+          "use": "—"
+        }
+      ],
+      "answer": [
+        0,
+        1
+      ],
+      "point": "コスト削減の基本順序：まず適正化（無駄をなくす）→ 次に約束による割引（リザーブド・Savings Plans）。大きすぎるまま約束すると、無駄を固定してしまう。",
+      "docs": [
+        "https://aws.amazon.com/rds/reserved-instances/",
+        "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html"
+      ],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-176",
+      "domain": "Billing, Pricing, and Support",
+      "q": "EC2インスタンスや EBS ボリューム、Lambda 関数について、過去の使用状況を機械学習で分析し、最適なサイズや設定を推奨してくれるサービスはどれか。",
+      "options": [
+        {
+          "text": "AWS Compute Optimizer",
+          "summary": "リソースの使用状況を分析し、過剰・不足を見つけて、最適なタイプやサイズを推奨するサービス。",
+          "why": "「使用状況の分析」「最適なサイズの推奨」は Compute Optimizer。",
+          "use": "全社のEC2を一覧で確認し、使用率が低いインスタンスを推奨どおり小さくして費用を削減する。"
+        },
+        {
+          "text": "AWS Budgets",
+          "summary": "予算の設定と通知。",
+          "why": "サイズの推奨はしない。",
+          "use": "予算超過を通知する。"
+        },
+        {
+          "text": "AWS Pricing Calculator",
+          "summary": "利用前の見積もり。",
+          "why": "実際の使用状況を分析しない。",
+          "use": "新しい構成の費用を見積もる。"
+        },
+        {
+          "text": "AWS Artifact",
+          "summary": "コンプライアンス文書のポータル。",
+          "why": "費用の最適化とは無関係。",
+          "use": "監査用の報告書を入手する。"
+        }
+      ],
+      "answer": [
+        0
+      ],
+      "point": "「ライトサイジング」「最適なインスタンスタイプの推奨」は Compute Optimizer。",
+      "docs": [
+        "https://aws.amazon.com/compute-optimizer/"
+      ],
+      "added": "2026-10-02"
+    }
+  ]
+}

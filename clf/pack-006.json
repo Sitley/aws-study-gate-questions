@@ -1,0 +1,510 @@
+{
+  "bank": "clf",
+  "packId": "pack-006",
+  "name": "追加問題: テクノロジーとサービス（AI・アプリ統合・コンテナ・ネットワーク）",
+  "created": "2026-10-02",
+  "questions": [
+    {
+      "id": "clf-151",
+      "domain": "Cloud Technology and Services",
+      "q": "ある会社は、複数の企業の基盤モデル（大規模言語モデルなど）をAPI経由で使い分けながら、インフラを管理せずに社内向けの生成AIアプリを作りたい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon Bedrock",
+          "summary": "主要なAI企業やAmazonの基盤モデルを、1つのAPIで使えるフルマネージドなサービス。自社データを使った回答の補強やエージェント機能なども備える。",
+          "why": "「複数の基盤モデル」「API」「インフラ管理不要」「生成AI」は Bedrock。",
+          "use": "社内規程や製品マニュアルを参照して答える社内向けのアシスタントを、モデルの学習なしで作る。"
+        },
+        {
+          "text": "Amazon SageMaker AI",
+          "summary": "機械学習モデルを自分で構築・学習・デプロイするためのサービス。",
+          "why": "モデルを自作・調整する用途が中心で、既存の基盤モデルをAPIで手軽に使うなら Bedrock が第一候補。",
+          "use": "独自の需要予測モデルを学習させる。"
+        },
+        {
+          "text": "Amazon Comprehend",
+          "summary": "テキストの感情や主要な語句を分析する学習済みの自然言語処理サービス。",
+          "why": "特定の分析タスク向けで、汎用の生成AIアプリの基盤ではない。",
+          "use": "商品レビューが好意的か否定的かを自動で分類する。"
+        },
+        {
+          "text": "Amazon Polly",
+          "summary": "テキストを自然な音声に変換するサービス。",
+          "why": "音声合成で、生成AIアプリの基盤ではない。",
+          "use": "お知らせ文を音声に変換して電話で流す。"
+        }
+      ],
+      "answer": [0],
+      "point": "「基盤モデル」「生成AI」「LLMをAPIで」は Bedrock。自分でモデルを作る・鍛えるなら SageMaker AI。",
+      "docs": ["https://aws.amazon.com/bedrock/"],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-152",
+      "domain": "Cloud Technology and Services",
+      "q": "コールセンターの通話を文字に起こし、また回答文を自然な音声で読み上げる仕組みを作りたい。それぞれに使うサービスはどれか。2つ選べ。",
+      "options": [
+        {
+          "text": "Amazon Transcribe",
+          "summary": "音声をテキストに変換する（音声認識）サービス。",
+          "why": "「通話を文字に起こす」に使う。",
+          "use": "通話内容を自動で文字にして、応対品質のチェックやFAQの改善に役立てる。"
+        },
+        {
+          "text": "Amazon Polly",
+          "summary": "テキストを自然な音声に変換する（音声合成）サービス。",
+          "why": "「回答文を音声で読み上げる」に使う。",
+          "use": "自動音声応答で、最新の案内文を録音し直さずに読み上げる。"
+        },
+        {
+          "text": "Amazon Comprehend",
+          "summary": "テキストの感情、主要な語句、話題などを分析する。",
+          "why": "文字起こしの後の分析には使えるが、音声の変換はしない。",
+          "use": "文字起こしした通話から、不満を示す問い合わせを抽出する。"
+        },
+        {
+          "text": "Amazon Textract",
+          "summary": "スキャンした書類から文字や表を抽出する。",
+          "why": "画像や書類が対象で、音声は扱わない。",
+          "use": "紙の申込書をスキャンして入力作業を自動化する。"
+        },
+        {
+          "text": "Amazon Rekognition",
+          "summary": "画像や動画を分析する。",
+          "why": "音声は扱わない。",
+          "use": "防犯カメラの映像から人物を検出する。"
+        }
+      ],
+      "answer": [0, 1],
+      "point": "音声→文字＝Transcribe、文字→音声＝Polly、文字の意味の分析＝Comprehend、書類→文字＝Textract、画像・動画＝Rekognition、翻訳＝Translate。",
+      "docs": ["https://aws.amazon.com/transcribe/", "https://aws.amazon.com/polly/"],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-153",
+      "domain": "Cloud Technology and Services",
+      "q": "経理部では毎月、取引先からの紙の請求書をスキャンして、金額や日付、明細の表を手入力している。この作業を自動化したい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon Textract",
+          "summary": "スキャンした書類や画像から、文字だけでなく表やフォームの項目を構造を保ったまま抽出するサービス。",
+          "why": "「スキャンした書類」「表やフォームの抽出」は Textract。",
+          "use": "請求書から取引先名、金額、支払期日、明細を抽出し、会計システムに自動で登録する。"
+        },
+        {
+          "text": "Amazon Rekognition",
+          "summary": "画像や動画の中の物体、顔、文字などを検出するサービス。",
+          "why": "画像の中の文字も検出できるが、請求書の表やフォームの構造を読み取るなら Textract が適している。",
+          "use": "商品写真に写っている物を自動でタグ付けする。"
+        },
+        {
+          "text": "Amazon Transcribe",
+          "summary": "音声を文字に変換する。",
+          "why": "紙の書類は扱わない。",
+          "use": "会議の録音を議事録にする。"
+        },
+        {
+          "text": "Amazon Translate",
+          "summary": "テキストを別の言語に翻訳する。",
+          "why": "書類から文字を取り出す機能はない。",
+          "use": "海外の取引先からのメールを日本語に翻訳する。"
+        }
+      ],
+      "answer": [0],
+      "point": "「書類」「フォーム」「表」「OCR以上の構造化」は Textract。",
+      "docs": ["https://aws.amazon.com/textract/"],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-154",
+      "domain": "Cloud Technology and Services",
+      "q": "数万件の商品レビューについて、肯定的か否定的かを自動で判定し、よく出てくる話題も抽出したい。機械学習の専門知識なしで使えるサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon Comprehend",
+          "summary": "テキストから感情、主要な語句、固有表現、話題などを抽出する学習済みの自然言語処理サービス。",
+          "why": "「感情分析」「話題の抽出」「専門知識不要」は Comprehend。",
+          "use": "SNSや問い合わせの内容を分析し、不満が増えている製品をいち早く見つける。"
+        },
+        {
+          "text": "Amazon Polly",
+          "summary": "テキストを音声に変換する。",
+          "why": "テキストの意味は分析しない。",
+          "use": "記事の読み上げ機能を作る。"
+        },
+        {
+          "text": "Amazon Rekognition",
+          "summary": "画像・動画の分析。",
+          "why": "テキストの感情分析はしない。",
+          "use": "投稿された画像に不適切なものがないか確認する。"
+        },
+        {
+          "text": "AWS Glue",
+          "summary": "データのETLとカタログ。",
+          "why": "データを整えるもので、文章の意味は分析しない。",
+          "use": "レビューデータを分析用に整形する。"
+        }
+      ],
+      "answer": [0],
+      "point": "「感情分析」「自然言語処理」「テキストから洞察」は Comprehend。",
+      "docs": ["https://aws.amazon.com/comprehend/"],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-155",
+      "domain": "Cloud Technology and Services",
+      "q": "スマートフォンアプリから呼び出すREST APIを、サーバーを管理せずに公開したい。リクエストの受付、認証、流量制限を担い、背後の処理は Lambda で行う。受付を担うサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon API Gateway",
+          "summary": "APIの作成、公開、保護、流量制限、監視をまとめて行うフルマネージドなサービス。",
+          "why": "「APIの受付」「認証」「流量制限」「Lambdaと連携」は API Gateway。",
+          "use": "飲食店の予約アプリのAPIを API Gateway と Lambda で作り、利用がない時間はほとんど費用がかからない構成にする。"
+        },
+        {
+          "text": "Elastic Load Balancing",
+          "summary": "受信した通信を複数のターゲットに分散する。",
+          "why": "負荷分散が役割で、APIの認証や流量制限、APIの管理は API Gateway の方が直接的。",
+          "use": "複数のEC2で動くWebアプリへの通信を振り分ける。"
+        },
+        {
+          "text": "Amazon Route 53",
+          "summary": "DNSサービス。",
+          "why": "名前解決で、APIのリクエストを処理するものではない。",
+          "use": "APIのドメイン名を設定する。"
+        },
+        {
+          "text": "Amazon SQS",
+          "summary": "メッセージキュー。",
+          "why": "アプリから直接呼ばれるAPIの受付ではない。",
+          "use": "受け付けた処理を非同期で後段に渡す。"
+        }
+      ],
+      "answer": [0],
+      "point": "サーバーレスAPIの定番構成：API Gateway（受付）＋ Lambda（処理）＋ DynamoDB（保存）。",
+      "docs": ["https://aws.amazon.com/api-gateway/"],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-156",
+      "domain": "Cloud Technology and Services",
+      "q": "AWSのサービスや外部のSaaSで発生したイベント（例: 「S3にファイルが置かれた」「決済が完了した」）を受け取り、条件に応じて適切な処理へ振り分けたい。毎日決まった時刻に処理を起動するスケジュールも設定したい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon EventBridge",
+          "summary": "AWSサービス、SaaS、自社アプリのイベントを受け取り、ルールに従ってターゲットに振り分けるサーバーレスのイベントバス。スケジュール実行もできる。",
+          "why": "「イベントを条件で振り分け」「SaaSと連携」「スケジュール」は EventBridge。",
+          "use": "決済サービスから「支払い完了」のイベントを受け取り、発送処理とポイント付与の処理を同時に起動する。"
+        },
+        {
+          "text": "Amazon SQS",
+          "summary": "メッセージを溜めて順に処理させるキュー。",
+          "why": "条件によるイベントの振り分けやスケジュール実行は主な役割ではない。",
+          "use": "注文を溜めて、処理側が自分のペースで取り出す。"
+        },
+        {
+          "text": "Amazon CloudFront",
+          "summary": "CDN。",
+          "why": "イベント処理とは関係ない。",
+          "use": "静的コンテンツの高速配信。"
+        },
+        {
+          "text": "AWS Direct Connect",
+          "summary": "専用線。",
+          "why": "イベント処理とは関係ない。",
+          "use": "オンプレミスとAWSの接続。"
+        }
+      ],
+      "answer": [0],
+      "point": "イベントの振り分け役＝EventBridge、溜める＝SQS、一斉配信＝SNS、手順を順に進める＝Step Functions。",
+      "docs": ["https://aws.amazon.com/eventbridge/"],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-157",
+      "domain": "Cloud Technology and Services",
+      "q": "ローンの申込処理は「書類確認 → 与信審査 → 承認待ち → 契約書作成 → 通知」と複数の手順からなり、失敗時の再試行や条件による分岐も必要だ。これらの手順の流れを、視覚的なワークフローとして管理したい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "AWS Step Functions",
+          "summary": "複数の処理を、順序、分岐、並列、再試行、エラー処理を含むワークフローとしてつなぎ、視覚的に管理するサーバーレスのサービス。",
+          "why": "「複数の手順」「再試行」「分岐」「ワークフロー」は Step Functions。",
+          "use": "審査で一定の条件に当てはまる申込だけ担当者の承認待ちに回し、それ以外は自動で契約書の作成に進める。"
+        },
+        {
+          "text": "Amazon SNS",
+          "summary": "通知の一斉配信。",
+          "why": "手順の流れや分岐は管理できない。",
+          "use": "審査結果を申込者にメールやSMSで知らせる。"
+        },
+        {
+          "text": "Amazon Kinesis Data Streams",
+          "summary": "ストリーミングデータの取り込み。",
+          "why": "業務手順の管理ではない。",
+          "use": "リアルタイムのデータを取り込む。"
+        },
+        {
+          "text": "AWS CloudFormation",
+          "summary": "インフラをコードで構築する。",
+          "why": "インフラの構築手順の自動化で、業務処理のワークフローではない。",
+          "use": "アプリの実行環境を作る。"
+        }
+      ],
+      "answer": [0],
+      "point": "「ワークフロー」「オーケストレーション」「状態の管理」「再試行と分岐」は Step Functions。",
+      "docs": ["https://aws.amazon.com/step-functions/"],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-158",
+      "domain": "Cloud Technology and Services",
+      "q": "サーバーのCPU使用率が上がったとき、運用チーム全員にメールとSMSで一斉に通知したい。CloudWatch アラームの通知先として最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon SNS",
+          "summary": "Pub/Sub型のメッセージングサービス。1つのメッセージを、メール、SMS、Lambda、SQSなど複数の購読先に一斉に送る。",
+          "why": "「一斉に通知」「メールとSMS」は SNS。",
+          "use": "障害発生時に、担当者のメールとスマートフォン、チャットへの転送処理に同時に知らせる。"
+        },
+        {
+          "text": "Amazon SQS",
+          "summary": "メッセージキュー。",
+          "why": "受け手がメッセージを取りに行く方式で、人へのメールやSMSの一斉配信はしない。",
+          "use": "システム間で処理を受け渡す。"
+        },
+        {
+          "text": "Amazon Comprehend",
+          "summary": "テキスト分析。",
+          "why": "通知機能はない。",
+          "use": "問い合わせの感情を分析する。"
+        },
+        {
+          "text": "AWS Glue",
+          "summary": "ETL。",
+          "why": "通知機能はない。",
+          "use": "分析用にデータを整える。"
+        }
+      ],
+      "answer": [0],
+      "point": "CloudWatch アラーム → SNS → メールやSMS、が監視通知の定番。SNSの1対多の配信は「ファンアウト」とも呼ばれる。",
+      "docs": ["https://aws.amazon.com/sns/"],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-159",
+      "domain": "Cloud Technology and Services",
+      "q": "開発チームは、すでにオンプレミスで Kubernetes を使ってコンテナを運用している。同じ Kubernetes の仕組みとツールのまま、AWS上でマネージドに運用したい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon EKS",
+          "summary": "マネージドな Kubernetes サービス。Kubernetes の管理部分（コントロールプレーン）をAWSが運用する。",
+          "why": "「Kubernetes」をそのまま使いたいなら EKS。",
+          "use": "オンプレミスで使っていた Kubernetes の設定ファイルや運用ツールを活かしたまま、AWSに移行する。"
+        },
+        {
+          "text": "Amazon ECS",
+          "summary": "AWS独自のマネージドなコンテナオーケストレーションサービス。",
+          "why": "コンテナの運用はできるが、Kubernetes ではないため、既存の Kubernetes の資産をそのまま使えない。",
+          "use": "Kubernetes の知識がないチームが、AWSのサービスと簡単に連携させてコンテナを運用する。"
+        },
+        {
+          "text": "Amazon ECR",
+          "summary": "コンテナイメージを保存するレジストリ。",
+          "why": "イメージの保管場所で、コンテナの実行・管理役ではない。",
+          "use": "ビルドしたコンテナイメージを保存し、EKS や ECS から取り出す。"
+        },
+        {
+          "text": "AWS Batch",
+          "summary": "バッチ処理の実行サービス。",
+          "why": "Kubernetes の運用基盤ではない。",
+          "use": "大量の計算ジョブを順番に実行する。"
+        }
+      ],
+      "answer": [0],
+      "point": "Kubernetes ならEKS、AWS独自でシンプルに使うなら ECS、イメージの保管は ECR、土台をサーバーレスにするなら Fargate。",
+      "docs": ["https://aws.amazon.com/eks/"],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-160",
+      "domain": "Cloud Technology and Services",
+      "q": "クラウドの経験がほとんどない個人事業主が、小さなWebサイトを、仮想サーバー・ストレージ・データ転送量がセットになった分かりやすい月額料金で立ち上げたい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "Amazon Lightsail",
+          "summary": "仮想サーバー、ストレージ、データ転送量などをまとめた分かりやすい料金プランで、手軽にサーバーやWebサイトを立ち上げられるサービス。",
+          "why": "「初心者」「小規模」「分かりやすい月額料金」は Lightsail。",
+          "use": "小さな飲食店や個人事業主が、WordPressのサイトを数クリックで立ち上げる。"
+        },
+        {
+          "text": "Amazon EC2",
+          "summary": "柔軟な仮想サーバー。",
+          "why": "細かく設定できる反面、ネットワークや料金の設計など初心者には難しい部分が多い。",
+          "use": "細かい構成の制御が必要な業務システムを動かす。"
+        },
+        {
+          "text": "Amazon EKS",
+          "summary": "マネージドな Kubernetes。",
+          "why": "小さなWebサイトには過剰で、専門知識も必要。",
+          "use": "大規模なコンテナ基盤を運用する。"
+        },
+        {
+          "text": "AWS Outposts",
+          "summary": "AWSのハードウェアを自社施設に置くサービス。",
+          "why": "小規模な個人のWebサイトには不釣り合い。",
+          "use": "工場や病院など、データを施設内に置く必要がある企業が使う。"
+        }
+      ],
+      "answer": [0],
+      "point": "「簡単」「定額に近い料金」「小規模なWebサイト」は Lightsail。",
+      "docs": ["https://aws.amazon.com/lightsail/"],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-161",
+      "domain": "Cloud Technology and Services",
+      "q": "Webアプリへのアクセス量は時間帯によって大きく変わる。CPU使用率などの指標に応じてEC2インスタンスの台数を自動で増減させ、異常なインスタンスは自動で入れ替えたい。最も適したものはどれか。",
+      "options": [
+        {
+          "text": "Amazon EC2 Auto Scaling",
+          "summary": "需要や指標に応じてEC2の台数を自動で増減し、異常なインスタンスを置き換えるサービス。",
+          "why": "「台数の自動増減」「異常なインスタンスの置き換え」は Auto Scaling。",
+          "use": "昼休みに注文が集中する弁当の宅配サービスで、昼だけ台数を増やし、深夜は最小限にして費用を抑える。"
+        },
+        {
+          "text": "Elastic Load Balancing",
+          "summary": "通信を複数のインスタンスに分散する。",
+          "why": "台数そのものは増減させない。Auto Scaling と組み合わせて使う。",
+          "use": "Auto Scaling で増えたインスタンスに通信を振り分ける。"
+        },
+        {
+          "text": "Amazon CloudFront",
+          "summary": "CDN。",
+          "why": "EC2の台数は調整しない。",
+          "use": "静的コンテンツを配信してサーバーの負荷を下げる。"
+        },
+        {
+          "text": "AWS Trusted Advisor",
+          "summary": "アカウントの点検と改善提案。",
+          "why": "台数を自動で調整する機能はない。",
+          "use": "使われていないインスタンスを見つける。"
+        }
+      ],
+      "answer": [0],
+      "point": "台数を増減する＝Auto Scaling、通信を振り分ける＝ELB、指標を測る＝CloudWatch。3つで弾力性を実現する。",
+      "docs": ["https://aws.amazon.com/ec2/autoscaling/"],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-162",
+      "domain": "Cloud Technology and Services",
+      "q": "世界中のプレイヤーが接続するオンラインゲームで、TCPとUDPの通信を安定させ、固定のIPアドレスで提供したい。キャッシュはできない通信である。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "AWS Global Accelerator",
+          "summary": "固定のエニーキャストIPアドレスを提供し、利用者の通信を最寄りの拠点からAWSのグローバルネットワーク経由で届け、性能と可用性を高めるサービス。",
+          "why": "「TCP/UDP」「固定IP」「キャッシュできない通信の高速化」は Global Accelerator。",
+          "use": "オンラインゲームやビデオ通話で、海外のプレイヤーの遅延と通信の不安定さを減らす。"
+        },
+        {
+          "text": "Amazon CloudFront",
+          "summary": "コンテンツをエッジでキャッシュして配信するCDN。",
+          "why": "HTTP(S)のコンテンツ配信が中心。キャッシュできないTCP/UDPの通信を固定IPで提供する用途は Global Accelerator。",
+          "use": "ゲームの更新ファイルや画像を世界中に配信する。"
+        },
+        {
+          "text": "Amazon Route 53",
+          "summary": "DNSサービス。",
+          "why": "名前解決はするが、通信経路そのものは最適化しない。",
+          "use": "利用者の地域に応じて接続先を振り分ける。"
+        },
+        {
+          "text": "AWS Direct Connect",
+          "summary": "オンプレミスとAWSの専用線。",
+          "why": "世界中の一般のプレイヤー向けではない。",
+          "use": "自社のデータセンターとAWSを接続する。"
+        }
+      ],
+      "answer": [0],
+      "point": "どちらもエッジを使うが、CloudFront はキャッシュ（主にHTTP）、Global Accelerator は経路の最適化（TCP/UDP、固定IP）。",
+      "docs": ["https://aws.amazon.com/global-accelerator/"],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-163",
+      "domain": "Cloud Technology and Services",
+      "q": "VPC内のサブネットに置いたWebサーバーを、インターネットから直接アクセスできる「パブリックサブネット」にしたい。必要なものはどれか。2つ選べ。",
+      "options": [
+        {
+          "text": "VPCにインターネットゲートウェイをアタッチする",
+          "summary": "VPCとインターネットをつなぐ出入口。",
+          "why": "これがないとVPCはインターネットと通信できない。",
+          "use": "公開Webサーバーを置くVPCに1つアタッチする。"
+        },
+        {
+          "text": "サブネットのルートテーブルに、インターネットゲートウェイへのルートを追加する",
+          "summary": "インターネット宛ての通信をインターネットゲートウェイに向ける経路設定。",
+          "why": "このルートを持つサブネットがパブリックサブネットと呼ばれる。",
+          "use": "Webサーバー用のサブネットだけにこのルートを設定し、データベース用のサブネットには設定しない。"
+        },
+        {
+          "text": "NATゲートウェイを作成する",
+          "summary": "プライベートサブネットから外向きにだけ通信するための中継。",
+          "why": "外から直接アクセスさせるための要素ではない。",
+          "use": "外部に公開しないサーバーがソフトウェア更新を取得する。"
+        },
+        {
+          "text": "VPCピアリングを設定する",
+          "summary": "VPC同士の接続。",
+          "why": "インターネットとの接続ではない。",
+          "use": "別のVPCにある共通サービスに接続する。"
+        },
+        {
+          "text": "AWS Direct Connect を契約する",
+          "summary": "オンプレミスとの専用線。",
+          "why": "インターネットからのアクセスとは関係ない。",
+          "use": "本社とAWSを専用線でつなぐ。"
+        }
+      ],
+      "answer": [0, 1],
+      "point": "パブリックサブネット＝インターネットゲートウェイへのルートがあるサブネット。実際にアクセスさせるには、さらにパブリックIPとセキュリティグループの許可も必要。",
+      "docs": ["https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html"],
+      "added": "2026-10-02"
+    },
+    {
+      "id": "clf-164",
+      "domain": "Cloud Technology and Services",
+      "q": "ある企業は数十個のVPCとオンプレミスのネットワークを相互に接続したい。VPC同士を1対1でつなぐと接続数が膨大になるため、中央のハブを介して接続を一元管理したい。最も適したサービスはどれか。",
+      "options": [
+        {
+          "text": "AWS Transit Gateway",
+          "summary": "多数のVPCやオンプレミスのネットワークを、中央のハブを介して接続するサービス。",
+          "why": "「多数のVPC」「ハブ型」「一元管理」は Transit Gateway。",
+          "use": "部署ごとに分かれた多数のVPCと本社のネットワークを、1つのハブにつなぎ、経路の管理を集中させる。"
+        },
+        {
+          "text": "VPC ピアリング",
+          "summary": "2つのVPCを1対1で接続する。",
+          "why": "VPCの数が増えると、組み合わせの数だけ接続が必要になり管理が難しくなる。",
+          "use": "2〜3個のVPCを単純に接続する。"
+        },
+        {
+          "text": "インターネットゲートウェイ",
+          "summary": "VPCとインターネットの出入口。",
+          "why": "VPC同士やオンプレミスとの接続を束ねるものではない。",
+          "use": "公開Webサーバーをインターネットにつなぐ。"
+        },
+        {
+          "text": "Amazon CloudFront",
+          "summary": "CDN。",
+          "why": "ネットワーク同士の接続とは無関係。",
+          "use": "コンテンツを世界中に配信する。"
+        }
+      ],
+      "answer": [0],
+      "point": "少数のVPCの1対1接続＝VPCピアリング、多数を束ねるハブ＝Transit Gateway。",
+      "docs": ["https://aws.amazon.com/transit-gateway/"],
+      "added": "2026-10-02"
+    }
+  ]
+}
